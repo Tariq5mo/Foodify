@@ -141,6 +141,25 @@ class FoodifyConsole(cmd.Cmd):
             ]
         )
 
+    def do_count(self, arg):
+        """Count instances of a class."""
+        if not arg:
+            print("** class name missing **")
+            return
+        args = arg.split()
+        if args[0] not in classes:
+            print("** class doesn't exist **")
+            return
+        print(
+            len(
+                [
+                    value
+                    for value in storage.all().values()
+                    if value.__class__.__name__ == args[0]
+                ]
+            )
+        )
+
     def emptyline(self):
         """Do nothing on empty input line."""
         pass
@@ -183,6 +202,17 @@ class FoodifyConsole(cmd.Cmd):
         print(
             "Update an instance. Usage: update <class_name> <id> "
             "<attribute> <value>"
+        )
+
+    def help_search(self):
+        print(
+            "Search for instances. Usage: search <class_name> <attribute> "
+            "<value>"
+        )
+
+    def help_count(self):
+        print(
+            "Count instances of a class. Usage: count <class_name>"
         )
 
 
