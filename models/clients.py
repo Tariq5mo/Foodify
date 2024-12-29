@@ -2,13 +2,13 @@
 """Client model module"""
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-from models.base_model import BaseModel
+from base_model import BaseModel
 
 
 
 class Client(BaseModel):
     """Client model"""
-    
+
     __tablename__ = 'clients'
 
     username = Column(String(50), nullable=False)
@@ -23,7 +23,7 @@ class Client(BaseModel):
 
 # my_client = Client(username="Ahmed", id="Ahmed", email="ahmed@example.com",
 #                 password_hash="hashedpassword")
-    
+
 
 # print("Created Model:", my_client)
 
