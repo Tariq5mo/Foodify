@@ -1,13 +1,12 @@
-from sqlalchemy import Column, String, Float, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, DECIMAL, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 
 
 class MenuItem(BaseModel):
-    """
-    Menu Item model to store restaurant menu items.
-    """
-    __tablename__ = 'menu_item'
+    """MenuItem model"""
+    
+    __tablename__ = 'menu_items'
 
     name = Column(String, nullable=False)
     item_type = Column(String, nullable=True)
@@ -18,6 +17,6 @@ class MenuItem(BaseModel):
                            nullable=False)
     order_id = Column(String(36), ForeignKey('order.id'), nullable=True)
 
-    # Relationships
-    restaurant = relationship('Restaurant', backref='menu_items')
-    order = relationship('Order', backref='ordered_items')
+    def __init__(self, *args, **kwargs):
+        """Initialize menu item"""
+        super().__init__(*args, **kwargs)

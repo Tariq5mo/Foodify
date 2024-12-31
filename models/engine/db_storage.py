@@ -7,19 +7,20 @@ from models.base_model import Base
 from models.clients import Client
 
 
-class DBStorage():
-    """ DBStorage class """
+class DBStorage:
+    """DBStorage class"""
+
     engine = None  # Holds the SQLAlchemy engine (connection manager)
     session = None  # Holds the database session (workspace)
 
     def __init__(self):
         """Initializes the DBStorage engine"""
 
-        USER = getenv('Foodify_MYSQL_USER')
-        PWD = getenv('Foodify_MYSQL_PWD')
-        HOST = getenv('Foodify_MYSQL_HOST')
-        DB = getenv('Foodify_MYSQL_DB')
-        ENV = getenv('Foodify_ENV')
+        USER = getenv("Foodify_MYSQL_USER")
+        PWD = getenv("Foodify_MYSQL_PWD")
+        HOST = getenv("Foodify_MYSQL_HOST")
+        DB = getenv("Foodify_MYSQL_DB")
+        ENV = getenv("Foodify_ENV")
 
         # Create the connection string using environment variables
         conn_str = f"mysql+mysqldb://{USER}:{PWD}@{HOST}/{DB}"
@@ -27,7 +28,7 @@ class DBStorage():
         # Create the SQLAlchemy engine (connection manager)
         self.engine = create_engine(conn_str, pool_pre_ping=True)
 
-        if ENV == 'test':
+        if ENV == "test":
             # Drop all tables for testing
             Base.metadata.drop_all(self.engine)
             print("All tables dropped because Foodify_ENV is set to 'test'.")
@@ -68,8 +69,7 @@ class DBStorage():
         Base.metadata.create_all(self.engine)
 
         # Create a session factory
-        session_factory = sessionmaker(bind=self.engine,
-                                        expire_on_commit=False)
+        session_factory = sessionmaker(bind=self.engine, expire_on_commit=False)
 
         # Create a thread-safe session using scoped_session
         self.session = scoped_session(session_factory)

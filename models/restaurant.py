@@ -1,18 +1,21 @@
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 
 
 class Restaurant(BaseModel):
-    """
-    Restaurant model to store restaurant information.
-    """
-    __tablename__ = 'restaurant'
+    """Restaurant model"""
+    
+    __tablename__ = 'restaurants'
 
-    name = Column(String, nullable=False)
-    location = Column(String, nullable=False)
-    owner_id = Column(String(36), ForeignKey('user.id'), nullable=False)
-    cuisine_type = Column(String, nullable=True)
+    name = Column(String(100), nullable=False)
+    city = Column(String(100), nullable=False)
 
-    # Relationship to the User who owns the restaurant
-    owner = relationship('User', backref='restaurants')
+    reviews = relationship("Review", back_populates="restaurant")
+    menu_items = relationship("MenuItem", back_populates="restaurant")
+    orders = relationship("Order", back_populates="restaurant")
+
+    def __init__(self, *args, **kwargs):
+        """Initialize restaurant"""
+        super().__init__(*args, **kwargs)
+
