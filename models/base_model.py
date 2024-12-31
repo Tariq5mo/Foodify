@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 """This module contains the base model for the application."""
-#!/usr/bin/env python
-"""This module contains the base model for the application."""
 import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, TIMESTAMP
+from sqlalchemy import Column, String, TIMESTAMP
 from sqlalchemy.ext.declarative import declarative_base
 
+# SQLAlchemy Base
 # SQLAlchemy Base
 Base = declarative_base()
 
