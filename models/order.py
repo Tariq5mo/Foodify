@@ -2,6 +2,8 @@ from sqlalchemy import Column, String, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 
+from models.base_model import BaseModel
+
 
 class Order(BaseModel):
     """
@@ -14,7 +16,13 @@ class Order(BaseModel):
                            nullable=False)
     # Store item list as a serialized string
     items = Column(String, nullable=False)
+    restaurant_id = Column(String(36), ForeignKey('restaurant.id'),
+                           nullable=False)
+    # Store item list as a serialized string
+    items = Column(String, nullable=False)
     total_price = Column(Float, nullable=False)
+    status = Column(String, nullable=False)  # e.g., 'pending',
+    # 'completed', 'cancelled'
     status = Column(String, nullable=False)  # e.g., 'pending',
     # 'completed', 'cancelled'
     payment_details = Column(String, nullable=True)
