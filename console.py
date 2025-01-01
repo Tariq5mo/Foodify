@@ -6,7 +6,7 @@ from models.clients import Client
 from models.restaurant import Restaurant
 from models.menu_item import MenuItem
 from models.review import Review
-from models.order import Order
+from models.orders import Order
 from models import storage
 
 classes = {
