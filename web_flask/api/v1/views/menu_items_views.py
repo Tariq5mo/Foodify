@@ -29,6 +29,7 @@ def put_menu_item(id):
     """Update a menu item"""
     return id
 
+
 @app_views.route("/menu_items/<id>", methods=["DELETE"], strict_slashes=False)
 def delete_menu_item(id):
     """Delete a menu item"""

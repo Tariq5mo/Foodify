@@ -67,4 +67,61 @@ def delete_restaurant_menu_item(id, menu_item_id):
     return id
 
 
+@app_views.route('/restaurants/<id>/orders', strict_slashes=False)
+def get_restaurant_orders(id):
+    """Get all orders for a specific restaurant"""
+    return id
 
+
+@app_views.route('/restaurants/<id>/orders', methods=['POST'], strict_slashes=False)
+def post_restaurant_orders(id):
+    """Create a new order for a specific restaurant"""
+    return id
+
+
+@app_views.route('/restaurants/<id>/orders/<order_id>', strict_slashes=False)
+def get_restaurant_order(id, order_id):
+    """Get a specific order for a specific restaurant"""
+    return id
+
+
+@app_views.route('/restaurants/<id>/orders/<order_id>', methods=['PUT'], strict_slashes=False)
+def put_restaurant_order(id, order_id):
+    """Update a specific order for a specific restaurant"""
+    return id
+
+
+@app_views.route('/restaurants/<id>/orders/<order_id>', methods=['DELETE'], strict_slashes=False)
+def delete_restaurant_order(id, order_id):
+    """Delete a specific order for a specific restaurant"""
+    return id
+
+
+@app_views.route('/restaurants/<id>/reviews', strict_slashes=False)
+def get_restaurant_reviews(id):
+    """Get all reviews for a specific restaurant"""
+    return id
+
+
+@app_views.route('/restaurants/<id>/reviews', methods=['POST'], strict_slashes=False)
+def post_restaurant_reviews(id):
+    """Create a new review for a specific restaurant"""
+    return id
+
+
+@app_views.route('/restaurants/<id>/reviews/<review_id>', strict_slashes=False)
+def get_restaurant_review(id, review_id):
+    """Get a specific review for a specific restaurant"""
+    return id
+
+
+@app_views.route('/restaurants/<id>/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
+def put_restaurant_review(id, review_id):
+    """Update a specific review for a specific restaurant"""
+    return id
+
+
+@app_views.route('/restaurants/<id>/reviews/<review_id>', methods=['DELETE'], strict_slashes=False)
+def delete_restaurant_review(id, review_id):
+    """Delete a specific review for a specific restaurant"""
+    return id
