@@ -11,7 +11,7 @@ from models import storage
 
 classes = {
     "BaseModel": BaseModel,
-    "User": Client,
+    "Client": Client,
     "Restaurant": Restaurant,
     "MenuItem": MenuItem,
     "Review": Review,
