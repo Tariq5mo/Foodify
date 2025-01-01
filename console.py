@@ -2,15 +2,16 @@
 """This module contains the console for the application."""
 import cmd
 from models.base_model import BaseModel
-from models.user import User
+from models.clients import Client
 from models.restaurant import Restaurant
 from models.menu_item import MenuItem
 from models.review import Review
 from models.order import Order
+from models import storage
 
 classes = {
     "BaseModel": BaseModel,
-    "User": User,
+    "User": Client,
     "Restaurant": Restaurant,
     "MenuItem": MenuItem,
     "Review": Review,

@@ -2,9 +2,10 @@ from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 
+
 class OrderItem(BaseModel):
     """OrderItem model"""
-    
+
     __tablename__ = 'order_items'
 
     order_id = Column(Integer, ForeignKey('orders.id'), nullable=False)

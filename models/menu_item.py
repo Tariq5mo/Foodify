@@ -1,11 +1,11 @@
-from sqlalchemy import Column, Integer, String, DECIMAL, Boolean, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import (
+    Column, String, Boolean, ForeignKey, Float)
 from models.base_model import BaseModel
 
 
 class MenuItem(BaseModel):
     """MenuItem model"""
-    
+
     __tablename__ = 'menu_items'
 
     name = Column(String, nullable=False)

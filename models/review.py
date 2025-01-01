@@ -5,12 +5,12 @@ from models.base_model import BaseModel
 
 class Review(BaseModel):
     """Review model"""
-    
+
     __tablename__ = 'reviews'
 
     user_id = Column(String(36), ForeignKey('user.id'), nullable=False)
     restaurant_id = Column(String(36), ForeignKey('restaurant.id'),
-                            nullable=False)
+                           nullable=False)
     rating = Column(Integer, nullable=False)
     comment = Column(Text, nullable=True)
 

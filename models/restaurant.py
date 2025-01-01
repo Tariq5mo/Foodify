@@ -5,7 +5,7 @@ from models.base_model import BaseModel
 
 class Restaurant(BaseModel):
     """Restaurant model"""
-    
+
     __tablename__ = 'restaurants'
 
     name = Column(String(100), nullable=False)
@@ -18,4 +18,3 @@ class Restaurant(BaseModel):
     def __init__(self, *args, **kwargs):
         """Initialize restaurant"""
         super().__init__(*args, **kwargs)
-

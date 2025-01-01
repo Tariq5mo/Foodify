@@ -4,6 +4,7 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from base_model import BaseModel
 
+
 class Client(BaseModel):
     """Client model"""
 
@@ -13,8 +14,10 @@ class Client(BaseModel):
     email = Column(String(100), unique=True, nullable=False)
     password_hash = Column(String(255), nullable=False)
 
-    reviews = relationship("Review", back_populates="client", cascade="all, delete")
-    orders = relationship("Order", back_populates="client", cascade="all, delete")
+    reviews = relationship("Review", back_populates="client",
+                           cascade="all, delete")
+    orders = relationship("Order", back_populates="client",
+                          cascade="all, delete")
 
     def __init__(self, *args, **kwargs):
         """Initialize client"""
@@ -31,4 +34,3 @@ class Client(BaseModel):
 # import models
 # storage.__session.add(my_client)
 # print("Model Saved:", my_client)
-
