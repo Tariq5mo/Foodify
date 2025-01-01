@@ -2,7 +2,7 @@
 """The Foodify app
 """
 from flask import Flask
-from views import app_views
+from app import app_views
 
 
 foodify_app: Flask = Flask(__name__)
