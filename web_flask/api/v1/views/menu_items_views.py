@@ -2,7 +2,7 @@
 """This module contains the view for the menu items
 """
 from flask import jsonify
-from api import app_views
+from web_flask.api.v1.views import app_views
 from models import storage
 
 

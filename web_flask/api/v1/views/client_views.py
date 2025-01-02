@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """This module contains the client views for the API.
 """
-from email.policy import strict
 from flask import jsonify
-from web_flask.api import app_views
 from models import storage
+from web_flask.api.v1.views import app_views
 
 
 @app_views.route("/clients", strict_slashes=False)

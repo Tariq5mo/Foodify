@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """This module contains the index views for the API.
 """
-from api import app_views
+from web_flask.api.v1.views import app_views
 from flask import jsonify
 from models.clients import Client
 from models.restaurant import Restaurant
@@ -31,7 +31,7 @@ def num_objs():
     return jsonify(di)
 
 
-@app_views.route("/status")
+@app_views.route("/status", strict_slashes=False)
 def foo_status():
     """Return the status"""
     return jsonify({"status": "OK"})
