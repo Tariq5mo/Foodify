@@ -77,3 +77,11 @@ class DBStorage:
     def close(self):
         """Call remove() method on the private session attribute"""
         self.session.remove()
+
+    def get_attributes(self, cls, obj_id):
+        """dssssssssdqsd"""
+        obj = self.session.query(cls).get(obj_id)
+        if obj:
+            return obj.__dict__
+        else:
+            return None
