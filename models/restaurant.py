@@ -1,12 +1,12 @@
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-from models.base_model import BaseModel
+from models.base_model import Base
 
 
-class Restaurant(BaseModel):
+class Restaurant(Base):
     """Restaurant model"""
 
-    __tablename__ = 'restaurants'
+    __tablename__ = "restaurants"
 
     name = Column(String(100), nullable=False)
     city = Column(String(100), nullable=False)

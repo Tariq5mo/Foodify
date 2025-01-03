@@ -12,7 +12,7 @@ from sqlalchemy.orm import sessionmaker
 Base = declarative_base()
 
 
-class BaseModel(Base):
+class Base(Base):
     """A base class for all Foodify models"""
 
     __abstract__ = True  # Make this an abstract base class
@@ -46,8 +46,9 @@ class BaseModel(Base):
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""
-        self.updated_at = datetime.now()
         import models
+
+        self.updated_at = datetime.now()
 
         models.storage.new(self)
         models.storage.save()
@@ -68,3 +69,4 @@ class BaseModel(Base):
         import models
 
         models.storage.delete(self)
+        storage.save()
