@@ -10,6 +10,7 @@ from models.review import Review
 from models.orders import Order
 from models.order_items import OrderItem
 from models import storage
+import datetime
 
 
 classes = {
@@ -32,6 +33,13 @@ def num_objs():
 
 
 @app_views.route("/status", strict_slashes=False)
-def foo_status():
-    """Return the status"""
-    return jsonify({"status": "OK"})
+def get_status():
+    """Return API status and version info"""
+    return jsonify(
+        {
+            "status": "OK",
+            "version": "1.0",
+            "environment": storage.environment,
+            "timestamp": datetime.now().isoformat(),
+        }
+    )

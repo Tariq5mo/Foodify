@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """This module contains the console for the application."""
 import cmd
-from models.base_model import BaseModel
+from models.base_model import Base
 from models.clients import Client
 from models.restaurant import Restaurant
 from models.menu_item import MenuItem
@@ -10,7 +10,7 @@ from models.orders import Order
 from models import storage
 
 classes = {
-    "BaseModel": BaseModel,
+    "BaseModel": Base,
     "Client": Client,
     "Restaurant": Restaurant,
     "MenuItem": MenuItem,
@@ -20,10 +20,7 @@ classes = {
 
 
 class FoodifyConsole(cmd.Cmd):
-    intro = (
-        "Welcome to the Foodify console. Type 'help' or '?' to list "
-        "commands.\n"
-    )
+    intro = "Welcome to the Foodify console. Type 'help' or '?' to list " "commands.\n"
     prompt = "(foodify) "
 
     def do_create(self, arg):
@@ -195,26 +192,19 @@ class FoodifyConsole(cmd.Cmd):
 
     def help_all(self):
         print(
-            "Print string representation of all instances. Usage: all "
-            "[<class_name>]"
+            "Print string representation of all instances. Usage: all " "[<class_name>]"
         )
 
     def help_update(self):
         print(
-            "Update an instance. Usage: update <class_name> <id> "
-            "<attribute> <value>"
+            "Update an instance. Usage: update <class_name> <id> " "<attribute> <value>"
         )
 
     def help_search(self):
-        print(
-            "Search for instances. Usage: search <class_name> <attribute> "
-            "<value>"
-        )
+        print("Search for instances. Usage: search <class_name> <attribute> " "<value>")
 
     def help_count(self):
-        print(
-            "Count instances of a class. Usage: count <class_name>"
-        )
+        print("Count instances of a class. Usage: count <class_name>")
 
 
 if __name__ == "__main__":
