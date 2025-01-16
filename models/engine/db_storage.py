@@ -24,7 +24,7 @@ class DBStorage:
     __engine = None
     __session = None
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize database connection with better settings"""
         user = getenv("FOOD_MYSQL_USER", "root")
         pwd = getenv("FOOD_MYSQL_PWD", "root")
@@ -87,7 +87,7 @@ class DBStorage:
             return self.__session.query(cls).filter(cls.id == id).first()
         return None
 
-    def all(self, cls=None):
+    def all(self, cls=None) -> Dict[str, BaseModel]:
         """Query objects"""
         try:
             if cls:

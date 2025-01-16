@@ -502,28 +502,58 @@ nav button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    gap: 10px;
+    margin: 20px 0;
 }
 
-.pagination a {
-    padding: 10px 15px;
-    margin: 20px 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    color: #333;
-    text-decoration: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
+.page-number {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.pagination a:hover {
+.page-number.active {
     background-color: #e78f38;
     color: white;
+    border-color: #e78f38;
 }
 
-.pagination a.disabled {
+.ellipsis {
+    margin: 0 5px;
+}
+
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-nav {
+    padding: 8px 16px;
+    border: 1px solid #e78f38;
+    border-radius: 20px;  /* More rounded corners */
+    color: #e78f38;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    background-color: transparent;
+}
+
+.page-nav:hover {
+    background-color: #e78f38;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(231, 143, 56, 0.3);
+}
+
+.page-nav.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: #ddd;
+    color: #999;
+    background-color: #f5f5f5;
     pointer-events: none;
-    background-color: #f4f4f4;
-    color: #aaa;
 }
 
 footer {
