@@ -35,25 +35,27 @@
             </li>
         </ul>
     </nav>
+
     <div class="orders-container">
         <h1>Your Orders</h1>
 
-        <div class="order-items" id="orderItems">
-            <!-- Order items will be dynamically added here -->
-            <div class="order-item">
-                <div class="order-details">
-                    <div class="meal">
-                        <img src="../static/images/Double Beef Burger.png" alt="Meal Image">
-                        <div class="meal-info">
-                            <h3>Double Beef Burger</h3>
-                            <p>Delicious beef burger with cheese and veggies</p>
-                            <span class="price">$10.99</span>
-                            <span class="quantity">x1</span>
+            <div class="meal" data-meal-id="1">
+                <!-- Meal details -->
+                <img src="../static/images/Double Beef Burger.png" alt="Meal Image">
+                <hr>
+                <div class="meal-info">
+                    <h3>meal name</h3>
+                    <p>Description</p>
+                    <div class="meal-footer">
+                        <span class="price" data-price="10.99">$10.99</span>
+                        <div class="quantity">
+                            <img src="../static/images/reduce.png" class="decrease" alt="Reduce quantity">
+                            <span class="quantity-value" data-quantity="0">0</span> <!-- Dynamic quantity here -->
+                            <img src="../static/images/add.png" class="increase" alt="Increase quantity">
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
         <div class="price-breakdown">
             <h2>Price Details</h2>
