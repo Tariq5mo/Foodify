@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,37 @@
     <link rel="stylesheet" href="../static/Styles/delivery.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
 </head>
+
 <body>
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="../static/images/logo.png" alt="Logo">
+            <h1>Foodify</h1>
+        </a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#restaurants">Restaurants</a></li>
+            <li><a href="index.html#search">Menu</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li class="cart-icon-container">
+                <a href="order.html">
+                    <img src="../static/images/grocery-cart.png" alt="Cart">
+                    <span id="cart-count" class="cart-count-hidden">0</span>
+                </a>
+            </li>
+            <li class="user-profile">
+                <a href="user.html">
+                    <img src="../static/images/user.png" alt="Profile">
+                </a>
+            </li>
+        </ul>
+    </nav>
     <!-- Navigation remains same as other pages -->
     <div class="delivery-container">
         <div class="map-section">
             <div id="map"></div>
             <div class="location-search">
-                <input 
-                    type="text" 
-                    id="address-input" 
-                    placeholder="Enter your delivery address"
-                >
+                <input type="text" id="address-input" placeholder="Enter your delivery address">
                 <button onclick="getCurrentLocation()">
                     Use Current Location
                 </button>
@@ -46,10 +67,74 @@
                         <option value="scheduled">Schedule for Later</option>
                     </select>
                 </div>
-                <button type="submit" class="confirm-btn">Confirm Order</button>
+                <button type="submit" class="pay-now-btn">
+                    <span>Pay Now</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
             </form>
         </div>
     </div>
+
+    <!-- Footer section -->
+<footer>
+    <div class="footer-content" id="footer">
+        <div class="about">
+            <h3>About Us</h3>
+            <p>At <strong>{Foodify}</strong>, we are passionate about bringing you the finest meals directly to your
+                doorstep. We understand the importance of quality, convenience, and speed, which is why we focus on
+                offering a wide variety of delicious dishes prepared with fresh ingredients by top chefs. Our goal
+                is to provide an exceptional dining experience, whether you're craving a hearty meal, a quick snack,
+                or something special for a celebration.
+
+                We believe in making every meal a delightful experience, so we take pride in offering not only great
+                food but also fast and reliable delivery. With our easy-to-use platform, you can explore a range of
+                cuisines from around the world, and have them delivered to your home or office in no time.
+
+                Our commitment to customer satisfaction means we continuously strive to improve our service,
+                ensuring that you enjoy a seamless ordering process, timely deliveries, and high-quality meals every
+                time. Whether you’re at home, at work, or celebrating an occasion, we are here to make sure you have
+                the best food at your fingertips.
+
+                Join us on a culinary journey today and experience the best of food, service, and convenience all in
+                one place!</p>
+        </div>
+    </div>
+    <div class="contact">
+        <h3>Contact Us</h3>
+        <div class="team">
+            <!-- Team member profiles -->
+            <div class="team-member">
+                <a href="https://www.linkedin.com/in/johnsamy2004/" target="_blank">
+                    <img src="../static/Team/John Samy.jpeg" alt="John Samy">
+                    <p class="name">John Samy</p>
+                </a>
+            </div>
+            <div class="team-member">
+                <a href="https://www.linkedin.com/in/ahmedbentabet/" target="_blank">
+                    <img src="../static/Team/Ahmed Bentabet.jpeg" alt="Ahmed Bentabet">
+                    <p class="name">Ahmed Bentabet</p>
+                </a>
+            </div>
+            <div class="team-member">
+                <a href="https://www.linkedin.com/in/tariq-omer-8599381ba/" target="_blank">
+                    <img src="../static/Team/Tariq Omer.jpeg" alt="Tariq Omer">
+                    <p class="name">Tariq Omer</p>
+                </a>
+            </div>
+            <div class="team-member">
+                <a href="https://www.linkedin.com/in/abobakr-elgandy/" target="_blank">
+                    <img src="../static/Team/Abobakr Elgandy.jpeg" alt="AboBakr Elgandy">
+                    <p class="name">Abobakr Elgandy</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- CopyRight -->
+    <div class="footer-bottom">
+        <p>&copy; 2025 All Rights Reserved</p>
+    </div>
+</footer>
 </body>
+
 </html>
 
