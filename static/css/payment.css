@@ -2,13 +2,15 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Helvetica Neue", sans-serif;
+    font-family: sans-serif;
+    text-decoration: none;
+    list-style: none;
+    scroll-behavior: smooth;
 }
 
 body {
     background: linear-gradient(#111, #222);
-    min-height: 100vh;
-    color: #fff;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 nav {
@@ -76,6 +78,28 @@ nav ul img {
 
 nav ul a img:hover {
     transform: scale(1.35);
+}
+
+
+.cart-icon-container {
+    position: relative;
+}
+
+.cart-count-hidden span {
+    display: none;
+}
+
+.user-profile img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease;
+    background-color: #ddd;
+    border-radius: 70%;
+    margin: 10px;
+}
+
+.user-profile:hover img {
+    transform: scale(1.1);
 }
 
 nav button {
@@ -321,3 +345,4 @@ footer ul {
         margin-bottom: 20px;
     }
 }
+
