@@ -36,6 +36,7 @@ def save_location():
             client.latitude = data['lat']
             client.longitude = data['lng']
             client.address = data['address']
+            client.phone = data['phone']
             client.delivery_instructions = data.get('instructions', '')
 
             session.commit()

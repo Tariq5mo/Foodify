@@ -6,278 +6,278 @@ let searchBox;
 // TomTom API key
 const API_KEY = "gTnO8GY8uqFMsvsF9yz3wZdxMFWBR0kJ";
 
-document.addEventListener('DOMContentLoaded', () => {
-    const locationPrompt = document.getElementById('locationPrompt');
-    const mapSection = document.getElementById('mapSection');
+document.addEventListener("DOMContentLoaded", () => {
+  const locationPrompt = document.getElementById("locationPrompt");
+  const mapSection = document.getElementById("mapSection");
 
-    // Handle stored location choice
-    document.getElementById('useStoredLocation').addEventListener('click', () => {
-        window.location.href = '/payment';
-    });
+  // Handle stored location choice
+  document.getElementById("useStoredLocation").addEventListener("click", () => {
+    window.location.href = "/payment";
+  });
 
-    document.getElementById('selectNewLocation').addEventListener('click', () => {
-        locationPrompt.style.display = 'none';
-        mapSection.style.display = 'block';
-        initializeMap();
-    });
+  document.getElementById("selectNewLocation").addEventListener("click", () => {
+    locationPrompt.style.display = "none";
+    mapSection.style.display = "block";
+    initializeMap();
+  });
 
-    // Initialize map
-    function initializeMap() {
-        try {
-            map = tt.map({
-                key: API_KEY,
-                container: 'map',
-                center: [31.2357, 30.0444], // Cairo coordinates
-                zoom: 13,
-                interactive: true // Ensure map is interactive
+  // Initialize map
+  function initializeMap() {
+    try {
+      map = tt.map({
+        key: API_KEY,
+        container: "map",
+        center: [31.2357, 30.0444], // Cairo coordinates
+        zoom: 13,
+        interactive: true,
+      });
+
+      try {
+        // Create SearchBox directly with services instance
+        searchBox = new tt.plugins.SearchBox(tt.services, {
+          minNumberOfCharacters: 3,
+          showSearchButton: true,
+          placeholder: "Search location...",
+          searchOptions: {
+            key: API_KEY,
+            language: "en-GB",
+          },
+        });
+
+        // Add SearchBox to map
+        map.addControl(searchBox, "top-left");
+
+        // Handle result selection
+        searchBox.on("tomtom.searchbox.resultselected", function (event) {
+          const result = event.data.result;
+          if (result.position) {
+            const coords = [result.position.lng, result.position.lat];
+            map.flyTo({
+              center: coords,
+              zoom: 15,
             });
-
-            // Add search box with improved configuration
-            try {
-                const searchBoxService = new tt.services.fuzzySearch({
-                    key: API_KEY,
-                    idleTimePress: 100,  // Reduced for faster response
-                    language: 'en-GB',
-                    radius: 50000, // 50km radius
-                    limit: 5  // Number of suggestions
-                });
-
-                // Create SearchBox with enhanced configuration
-                searchBox = new tt.plugins.SearchBox(tt.services.fuzzySearch, {
-                    minNumberOfCharacters: 2,
-                    searchOptions: {
-                        key: API_KEY,
-                        language: 'en-GB'
-                    },
-                    autocompleteOptions: {
-                        key: API_KEY,
-                        language: 'en-GB'
-                    },
-                    labels: {
-                        placeholder: 'Search for a location'
-                    }
-                });
-
-                // Add SearchBox to map
-                map.addControl(searchBox, 'top-left');
-
-                // Handle result selection
-                searchBox.on('tomtom.searchbox.resultselected', function(event) {
-                    const result = event.data.result;
-                    if (result.position) {
-                        const coords = [result.position.lng, result.position.lat];
-                        map.flyTo({
-                            center: coords,
-                            zoom: 15
-                        });
-                        placeMarker(coords);
-                        getAddress({
-                            lng: result.position.lng,
-                            lat: result.position.lat
-                        });
-                    }
-                });
-
-                // Handle enter key press
-                searchBox.getSearchBox().addEventListener('keyup', function(e) {
-                    if (e.key === 'Enter') {
-                        const searchQuery = e.target.value;
-                        if (searchQuery.length >= 2) {
-                            searchLocation(searchQuery);
-                        }
-                    }
-                });
-
-            } catch (error) {
-                console.error('SearchBox initialization error:', error);
-                showError(error);
-            }
-
-            // Add marker on map click
-            map.on('click', (e) => {
-                // TomTom click event provides coordinates in {lng, lat} format
-                const clickedPoint = e.lngLat;
-                placeMarker(clickedPoint);
-                getAddress(clickedPoint);
+            placeMarker(coords);
+            getAddress({
+              lng: result.position.lng,
+              lat: result.position.lat,
             });
-        } catch (error) {
-            console.error('Map initialization error:', error);
-            showError(error);
-        }
+          }
+        });
+      } catch (error) {
+        console.error("SearchBox initialization error:", error);
+        showError("Failed to initialize search");
+      }
+
+      // Add marker on map click
+      map.on("click", (e) => {
+        // TomTom click event provides coordinates in {lng, lat} format
+        const clickedPoint = e.lngLat;
+        placeMarker(clickedPoint);
+        getAddress(clickedPoint);
+      });
+    } catch (error) {
+      console.error("Map initialization error:", error);
+      showError(error);
+    }
+  }
+
+  // Handle geolocation
+  document.getElementById("geolocateMe").addEventListener("click", () => {
+    if (!navigator.geolocation) {
+      showError("Geolocation is not supported by your browser");
+      return;
     }
 
-    // Handle geolocation
-    document.getElementById('geolocateMe').addEventListener('click', () => {
-        if (!navigator.geolocation) {
-            showError('Geolocation is not supported by your browser');
-            return;
-        }
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const coords = {
+          lng: position.coords.longitude,
+          lat: position.coords.latitude,
+        };
+        map.flyTo({
+          center: [coords.lng, coords.lat],
+          zoom: 15,
+        });
+        placeMarker([coords.lng, coords.lat]);
+        getAddress(coords);
+      },
+      (error) => {
+        handleLocationError(error);
+      }
+    );
+  });
 
-        navigator.geolocation.getCurrentPosition(
-            position => {
-                const coords = {
-                    lng: position.coords.longitude,
-                    lat: position.coords.latitude
-                };
-                map.flyTo({
-                    center: [coords.lng, coords.lat],
-                    zoom: 15
-                });
-                placeMarker([coords.lng, coords.lat]);
-                getAddress(coords);
+  // Form submission
+  document.getElementById("locationForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!marker) {
+        showError("Please select a location on the map");
+        return;
+    }
+
+    const countryCode = document.getElementById("country-code").value;
+    const phoneNumber = document.getElementById("phone").value;
+    const fullPhone = countryCode + phoneNumber;
+
+    // Validate phone number based on country code
+    const phoneRegex = {
+        // Middle East & North Africa
+        '+20': /^\+20[0-9]{10}$/, // Egypt
+        '+966': /^\+966[0-9]{9}$/, // Saudi Arabia
+        '+971': /^\+971[0-9]{9}$/, // UAE
+        '+974': /^\+974[0-9]{8}$/, // Qatar
+        '+965': /^\+965[0-9]{8}$/, // Kuwait
+        '+968': /^\+968[0-9]{8}$/, // Oman
+        '+973': /^\+973[0-9]{8}$/, // Bahrain
+        '+962': /^\+962[0-9]{9}$/, // Jordan
+        '+961': /^\+961[0-9]{8}$/, // Lebanon
+        '+963': /^\+963[0-9]{9}$/, // Syria
+        '+964': /^\+964[0-9]{10}$/, // Iraq
+        '+216': /^\+216[0-9]{8}$/, // Tunisia
+        '+213': /^\+213[0-9]{9}$/, // Algeria
+        '+212': /^\+212[0-9]{9}$/, // Morocco
+        '+218': /^\+218[0-9]{9}$/, // Libya
+        '+249': /^\+249[0-9]{9}$/, // Sudan
+
+        // Europe
+        '+44': /^\+44[0-9]{10}$/, // UK
+        '+33': /^\+33[0-9]{9}$/, // France
+        '+49': /^\+49[0-9]{11}$/, // Germany
+        '+39': /^\+39[0-9]{10}$/, // Italy
+        '+34': /^\+34[0-9]{9}$/, // Spain
+
+        // North America
+        '+1': /^\+1[0-9]{10}$/, // USA/Canada
+
+        // Asia
+        '+86': /^\+86[0-9]{11}$/, // China
+        '+91': /^\+91[0-9]{10}$/, // India
+        '+81': /^\+81[0-9]{10}$/, // Japan
+        '+82': /^\+82[0-9]{10}$/, // South Korea
+    };
+
+    if (!phoneRegex[countryCode].test(fullPhone)) {
+        showError("Please enter a valid phone number for " +
+                 countryCode + " (including country code)");
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/v1/location/save", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-            error => {
-                handleLocationError(error);
-            }
-        );
-    });
+            body: JSON.stringify({
+                lat: marker.getLngLat().lat,
+                lng: marker.getLngLat().lng,
+                address: document.getElementById("address").value,
+                phone: fullPhone,
+                instructions: document.getElementById("instructions").value
+            })
+        });
 
-    // Form submission
-    document.getElementById('locationForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if (!marker) {
-            showError('Please select a location on the map');
-            return;
+        if (response.ok) {
+            window.location.href = "/payment";
+        } else {
+            throw new Error("Failed to save location");
         }
-
-        try {
-            const response = await fetch('/api/v1/location/save', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    lat: marker.getLngLat().lat,
-                    lng: marker.getLngLat().lng,
-                    address: document.getElementById('address').value,
-                    instructions: document.getElementById('instructions').value
-                })
-            });
-
-            if (response.ok) {
-                window.location.href = '/payment';
-            } else {
-                throw new Error('Failed to save location');
-            }
-        } catch (error) {
-            showError(error.message);
-        }
-    });
+    } catch (error) {
+        showError(error.message);
+    }
+  });
 });
 
 function placeMarker(lngLat) {
-    if (marker) marker.remove();
+  if (marker) marker.remove();
 
-    // Handle both array and object formats of coordinates
-    let coordinates;
-    if (Array.isArray(lngLat)) {
-        coordinates = lngLat;
-    } else if (lngLat.lng && lngLat.lat) {
-        coordinates = [lngLat.lng, lngLat.lat];
-    } else {
-        coordinates = [lngLat[0], lngLat[1]];
-    }
+  // Handle both array and object formats of coordinates
+  let coordinates;
+  if (Array.isArray(lngLat)) {
+    coordinates = lngLat;
+  } else if (lngLat.lng && lngLat.lat) {
+    coordinates = [lngLat.lng, lngLat.lat];
+  } else {
+    coordinates = [lngLat[0], lngLat[1]];
+  }
 
-    marker = new tt.Marker()
-        .setLngLat(coordinates)
-        .addTo(map);
+  marker = new tt.Marker().setLngLat(coordinates).addTo(map);
 }
 
 function getAddress(coords) {
-    tt.services.reverseGeocode({
-        key: API_KEY,
-        position: coords
+  tt.services
+    .reverseGeocode({
+      key: API_KEY,
+      position: coords,
     })
-    .then(response => {
-        if (response.addresses && response.addresses.length > 0) {
-            document.getElementById('address').value = response.addresses[0].address.freeformAddress;
-        }
+    .then((response) => {
+      if (response.addresses && response.addresses.length > 0) {
+        document.getElementById("address").value =
+          response.addresses[0].address.freeformAddress;
+      }
     })
-    .catch(error => {
-        showError('Could not fetch address');
-        console.error(error);
+    .catch((error) => {
+      showError("Could not fetch address");
+      console.error(error);
     });
 }
 
 function handleLocationError(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            showError('Please allow location access to use this feature');
-            break;
-        case error.POSITION_UNAVAILABLE:
-            showError('Location information unavailable');
-            break;
-        case error.TIMEOUT:
-            showError('Location request timed out');
-            break;
-        default:
-            showError('An unknown error occurred');
-            break;
-    }
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      showError("Please allow location access to use this feature");
+      break;
+    case error.POSITION_UNAVAILABLE:
+      showError("Location information unavailable");
+      break;
+    case error.TIMEOUT:
+      showError("Location request timed out");
+      break;
+    default:
+      showError("An unknown error occurred");
+      break;
+  }
 }
 
 function showError(message) {
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-message';
-    errorDiv.textContent = message;
-    document.querySelector('.delivery-container').prepend(errorDiv);
-    setTimeout(() => errorDiv.remove(), 5000);
+  const errorDiv = document.createElement("div");
+  errorDiv.className = "error-message";
+  errorDiv.textContent = message;
+  document.querySelector(".delivery-container").prepend(errorDiv);
+  setTimeout(() => errorDiv.remove(), 5000);
 }
 
-<<<<<<< HEAD
 // Add this new function to handle manual searches
 async function searchLocation(query) {
-    try {
-        const response = await tt.services.fuzzySearch({
-            key: API_KEY,
-            query: query,
-            language: 'en-GB',
-            limit: 1
-        }).go();
+  try {
+    const response = await tt.services
+      .fuzzySearch({
+        key: API_KEY,
+        query: query,
+        language: "en-GB",
+        limit: 1,
+      })
+      .go();
 
-        if (response.results && response.results.length > 0) {
-            const result = response.results[0];
-            const coords = [result.position.lng, result.position.lat];
+    if (response.results && response.results.length > 0) {
+      const result = response.results[0];
+      const coords = [result.position.lng, result.position.lat];
 
-            map.flyTo({
-                center: coords,
-                zoom: 15
-            });
+      map.flyTo({
+        center: coords,
+        zoom: 15,
+      });
 
-            placeMarker(coords);
-            getAddress({
-                lng: result.position.lng,
-                lat: result.position.lat
-            });
-        } else {
-            showError('Location not found');
-        }
-    } catch (error) {
-        console.error('Search error:', error);
-        showError('Failed to search location');
+      placeMarker(coords);
+      getAddress({
+        lng: result.position.lng,
+        lat: result.position.lat,
+      });
+    } else {
+      showError("Location not found");
     }
+  } catch (error) {
+    console.error("Search error:", error);
+    showError("Failed to search location");
+  }
 }
-=======
-document.getElementById('delivery-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    if (!validateDeliveryForm()) return;
-
-    // Save delivery info
-    const deliveryDetails = {
-        address: document.getElementById('address-input').value,
-        contactName: document.getElementById('contact-name').value,
-        phone: document.getElementById('phone').value,
-        instructions: document.getElementById('instructions').value,
-        location: marker ? {
-            lat: marker.getPosition().lat(),
-            lng: marker.getPosition().lng()
-        } : null
-    };
-
-    // Store and navigate
-    localStorage.setItem('deliveryDetails', JSON.stringify(deliveryDetails));
-    window.location.href = 'payment.html';
-}); 
-
->>>>>>> 071639e9a35a8e0fbfaf210325a8d9b6902e7f4a
