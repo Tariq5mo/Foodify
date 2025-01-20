@@ -1,3 +1,9 @@
+/* Match welcome page styling */
+body {
+    background: linear-gradient(#111, #222);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 .delivery-container {
     max-width: 1200px;
     margin: 80px auto 0;
@@ -7,9 +13,11 @@
 .location-prompt {
     text-align: center;
     padding: 40px;
-    background: white;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    color: #fff;
 }
 
 .button-group {
@@ -32,9 +40,20 @@
     color: white;
 }
 
+.btn.primary:hover {
+    background: #f79c42;
+    transform: scale(0.95);
+}
+
 .btn.secondary {
-    background: #f5f5f5;
-    color: #333;
+    background: transparent;
+    color: #fff;
+    border: 2px solid #e78f38;
+}
+
+.btn.secondary:hover {
+    background: #fff;
+    color: #e78f38;
 }
 
 .map-section {
@@ -45,6 +64,7 @@
     width: 100%;
     height: 400px;
     border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .location-search {
@@ -62,10 +82,12 @@
 
 .delivery-details {
     margin-top: 20px;
-    background: white;
+    background: rgba(255, 255, 255, 0.1);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    color: #fff;
 }
 
 .form-group {
@@ -75,15 +97,58 @@
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    color: #333;
+    color: #fff;
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 5px;
+    color: #fff;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #e78f38;
+    box-shadow: 0 0 5px rgba(231, 143, 56, 0.3);
+}
+
+.phone-input-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.country-code {
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    color: #fff;
+    min-width: 120px;
+}
+
+.phone-input-container input[type="tel"] {
+    flex: 1;
+}
+
+.form-hint {
+    display: block;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+
+.form-group input:invalid {
+    border-color: #ff4444;
+}
+
+.form-group input:focus:invalid {
+    outline-color: #ff4444;
 }
 
 .error-message {
@@ -91,9 +156,10 @@
     top: 20px;
     right: 20px;
     padding: 15px 25px;
-    background: #ff4444;
+    background: rgba(255, 68, 68, 0.9);
     color: white;
     border-radius: 5px;
+    backdrop-filter: blur(10px);
     animation: slideIn 0.3s ease;
 }
 
@@ -129,43 +195,44 @@
     margin: 10px;
 }
 
+/* TomTom SearchBox styling */
 .tt-search-box-input {
     width: 100%;
     padding: 12px 40px 12px 16px;
-    border: 1px solid #ddd;
+    background: rgba(0, 0, 0, 0.7);  /* Darker background */
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 25px;
+    color: #e78f38 !important;  /* Orange text color */
     font-size: 14px;
-    background: white;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    font-weight: 500;  /* Make text slightly bolder */
 }
 
+/* Placeholder text color */
+.tt-search-box-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);  /* More visible placeholder */
+}
+
+/* Text color when typing */
 .tt-search-box-input:focus {
     outline: none;
     border-color: #e78f38;
-    box-shadow: 0 2px 8px rgba(231, 143, 56, 0.2);
+    box-shadow: 0 0 10px rgba(231, 143, 56, 0.3);
+    background: rgba(0, 0, 0, 0.8);  /* Darker background when focused */
 }
 
 .tt-search-box-result-list {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-top: 8px;
-    max-height: 300px;
-    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.9);
+    color: #e78f38;
+    border: 1px solid rgba(231, 143, 56, 0.3);
 }
 
 .tt-search-box-result {
+    color: #e78f38;  /* Orange text for results */
     padding: 12px 16px;
-    cursor: pointer;
-    transition: background 0.2s ease;
 }
 
-.tt-search-box-result:hover {
-    background: #f5f5f5;
-}
-
+.tt-search-box-result:hover,
 .tt-search-box-result.selected {
-    background: #e78f38;
-    color: white;
+    background: rgba(231, 143, 56, 0.2);
+    color: #fff;
 }
