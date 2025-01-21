@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Details - Foodify</title>
+    <!-- TomTom Maps SDK -->
+    <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.23.0/maps/maps.css'>
+    <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.2.0/SearchBox.css'>
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.23.0/maps/maps-web.min.js"></script>
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.23.0/services/services-web.min.js"></script>
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.2.0/SearchBox-web.js"></script>
+    <!-- Your CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/delivery.css') }}">
+</head>
+<body class="{{ 'user-logged-in' if current_user.is_authenticated else '' }}">
+    <div class="delivery-container">
+        <!-- Location Prompt -->
+        <div id="locationPrompt" class="location-prompt">
+            <h2>Delivery Location</h2>
+            <p>Would you like to continue with your stored location?</p>
+            {% if stored_location %}
+                <p class="stored-address">{{ stored_location.address }}</p>
+            {% endif %}
+            <div class="button-group">
+                <button id="useStoredLocation" class="btn primary">Yes</button>
+                <button id="selectNewLocation" class="btn secondary">No</button>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div id="mapSection" class="map-section" style="display: none;">
+            <div id="map"></div>
+            <script>
+                // Verify TomTom SDK is loaded
+                if (typeof tt === 'undefined') {
+                    console.error('TomTom SDK not loaded');
+                }
+            </script>
+            <div class="location-search">
+                <!-- Only keep the geolocation button -->
+                <button id="geolocateMe" class="btn">
+                    <i class="fas fa-location-arrow"></i> Use My Location
+                </button>
+            </div>
+            <!-- Delivery Form -->
+            <div class="delivery-details">
+                <form id="locationForm">
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" required readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="phone-input-container">
+                            <select id="country-code" class="country-code">
+                                <!-- Middle East & North Africa -->
+                                <option value="+20">🇪🇬 +20 (Egypt)</option>
+                                <option value="+966">🇸🇦 +966 (Saudi Arabia)</option>
+                                <option value="+971">🇦🇪 +971 (UAE)</option>
+                                <option value="+974">🇶🇦 +974 (Qatar)</option>
+                                <option value="+965">🇰🇼 +965 (Kuwait)</option>
+                                <option value="+968">🇴🇲 +968 (Oman)</option>
+                                <option value="+973">🇧🇭 +973 (Bahrain)</option>
+                                <option value="+962">🇯🇴 +962 (Jordan)</option>
+                                <option value="+961">🇱🇧 +961 (Lebanon)</option>
+                                <option value="+963">🇸🇾 +963 (Syria)</option>
+                                <option value="+964">🇮🇶 +964 (Iraq)</option>
+                                <option value="+216">🇹🇳 +216 (Tunisia)</option>
+                                <option value="+213">🇩🇿 +213 (Algeria)</option>
+                                <option value="+212">🇲🇦 +212 (Morocco)</option>
+                                <option value="+218">🇱🇾 +218 (Libya)</option>
+                                <option value="+249">🇸🇩 +249 (Sudan)</option>
+
+                                <!-- Europe -->
+                                <option value="+44">🇬🇧 +44 (UK)</option>
+                                <option value="+33">🇫🇷 +33 (France)</option>
+                                <option value="+49">🇩🇪 +49 (Germany)</option>
+                                <option value="+39">🇮🇹 +39 (Italy)</option>
+                                <option value="+34">🇪🇸 +34 (Spain)</option>
+
+                                <!-- North America -->
+                                <option value="+1">🇺🇸 +1 (USA)</option>
+                                <option value="+1">🇨🇦 +1 (Canada)</option>
+
+                                <!-- Asia -->
+                                <option value="+86">🇨🇳 +86 (China)</option>
+                                <option value="+91">🇮🇳 +91 (India)</option>
+                                <option value="+81">🇯🇵 +81 (Japan)</option>
+                                <option value="+82">🇰🇷 +82 (South Korea)</option>
+                            </select>
+                            <input
+                                type="tel"
+                                id="phone"
+                                pattern="[0-9]{8,10}"
+                                placeholder="Phone number without country code"
+                                required
+                                title="Please enter a valid phone number"
+                            >
+                        </div>
+                        <small class="form-hint">Enter your phone number with country code (e.g., +20 1234567890)</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="instructions">Delivery Instructions</label>
+                        <textarea id="instructions" placeholder="Apartment number, landmarks, etc"></textarea>
+                    </div>
+                    <button type="submit" class="btn primary">Confirm Location</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/delivery.js') }}"></script>
+</body>
+</html>
