@@ -19,7 +19,7 @@ async function updateCart(mealId, mealName, mealPrice, action) {
         }
 
         const data = await response.json();
-        
+
         // Update local cart state
         updateLocalCart(data);
         // Update the cart display
@@ -114,11 +114,13 @@ const knowMoreButton = document.querySelector('.know_more'); // Button to open t
 const modal = document.querySelector('.modal'); // Modal container
 const closeModal = document.querySelector('.close'); // Close button inside the modal
 
-// Add event listener to open the modal when the 'Know More' button is clicked
-knowMoreButton.addEventListener('click', () => {
-    modal.classList.add('show'); // Add class to show the modal with animation
-    modal.classList.remove('fade-out'); // Remove fade-out class if modal is being shown
-});
+// Add null check before adding event listener
+if (knowMoreButton) {
+    knowMoreButton.addEventListener('click', () => {
+        modal.classList.add('show'); // Add class to show the modal with animation
+        modal.classList.remove('fade-out'); // Remove fade-out class if modal is being shown
+    });
+}
 
 // Add event listener to close the modal when the close button is clicked
 closeModal.addEventListener('click', () => {
@@ -137,3 +139,8 @@ window.addEventListener('click', (e) => {
         }, 400); // Match the animation duration (e.g., 400ms)
     }
 });
+
+const element = document.getElementById('elementId');
+if (element) {
+    element.addEventListener('click', handler);
+}

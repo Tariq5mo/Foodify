@@ -1,4 +1,4 @@
-/* From Uiverse.io by akshat-patel28 */ 
+/* From Uiverse.io by akshat-patel28 */
 .form-container {
   width: 350px;
   height: 500px;
@@ -12,9 +12,10 @@
 .title {
   text-align: center;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   margin: 10px 0 30px 0;
-  font-size: 32px;  /* Increased from 28px */
+  font-size: 32px;
+  /* Increased from 28px */
   font-weight: 800;
 }
 
@@ -45,8 +46,9 @@
 .page-link-label {
   cursor: pointer;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-size: 12px;  /* Increased from 9px */
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 12px;
+  /* Increased from 9px */
   font-weight: 700;
 }
 
@@ -57,7 +59,7 @@
 .form-btn {
   padding: 10px 15px;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   border-radius: 20px;
   border: 0 !important;
   outline: 0 !important;
@@ -73,22 +75,24 @@
 
 .sign-up-label {
   margin: 0;
-  font-size: 13px;  /* Increased from 10px */
+  font-size: 13px;
+  /* Increased from 10px */
   color: #0c0909;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .sign-up-link {
   margin-left: 1px;
-  font-size: 14px;  /* Increased from 11px */
+  font-size: 14px;
+  /* Increased from 11px */
   text-decoration: underline;
   text-decoration-color: #6e4c0c;
   color: #6e4c0c;
   cursor: pointer;
   font-weight: 800;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .buttons-container {
@@ -101,19 +105,20 @@
 }
 
 .apple-login-button,
-    .google-login-button {
+.google-login-button {
   border-radius: 20px;
   box-sizing: border-box;
   padding: 10px 15px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
-        rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-size: 14px;  /* Increased from 11px */
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  /* Increased from 11px */
   gap: 5px;
 }
 
@@ -128,7 +133,7 @@
 }
 
 .apple-icon,
-    .google-icon {
+.google-icon {
   font-size: 18px;
   margin-bottom: 1px;
 }
