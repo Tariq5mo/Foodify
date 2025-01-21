@@ -1,50 +1,38 @@
 // Constants
 const DELIVERY_FEE = 5.00;
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 6;
+const SCROLL_THRESHOLD = 100;
 
 // DOM Elements
 const elements = {
     orderItems: document.getElementById('orderItems'),
     subtotal: document.getElementById('subtotal'),
     total: document.getElementById('total'),
-    proceedBtn: document.getElementById('proceedToDelivery')
+    proceedBtn: document.getElementById('proceedToDelivery'),
+    priceBreakdown: document.getElementById('priceBreakdown'),
+    loadingIndicator: document.getElementById('loadingIndicator')
 };
-
-// State Management
-let cartItems = [];
-let currentPage = 1;
-let isLoading = false;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     loadCartItems();
     renderInitialOrder();
     setupEventListeners();
+    updatePriceBreakdown();
 });
-
-function loadCartItems() {
-    try {
-        cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    } catch (error) {
-        console.error('Error loading cart:', error);
-        cartItems = [];
-    }
-}
-
-function renderInitialOrder() {
-    renderOrderItems(1);
-    updatePriceDisplay();
-}
 
 function renderOrderItems(page) {
     const start = (page - 1) * ITEMS_PER_PAGE;
     const end = start + ITEMS_PER_PAGE;
     const items = cartItems.slice(start, end);
 
+    const fragment = document.createDocumentFragment();
     items.forEach(item => {
-        const mealCard = createMealCard(item);
-        elements.orderItems.appendChild(mealCard);
+        fragment.appendChild(createMealCard(item));
     });
+
+    elements.orderItems.appendChild(fragment);
+    updateLoadingState(false);
 }
 
 function createMealCard(item) {
@@ -55,92 +43,74 @@ function createMealCard(item) {
     card.innerHTML = `
         <img src="${sanitizeInput(item.image)}" alt="${sanitizeInput(item.name)}">
         <div class="meal-info">
-            <h3>${sanitizeInput(item.name)}</h3>
-            <p>${sanitizeInput(item.description)}</p>
-            <div class="quantity-controls">
-                <button class="quantity-btn decrease">-</button>
-                <span class="quantity-value">${item.quantity}</span>
-                <button class="quantity-btn increase">+</button>
+            <div class="meal-header">
+                <h3>${sanitizeInput(item.name)}</h3>
+                <span class="price">$${item.price.toFixed(2)}</span>
             </div>
-            <div class="price">$${(item.price * item.quantity).toFixed(2)}</div>
+            <p class="description">${sanitizeInput(item.description)}</p>
+            <div class="meal-footer">
+                <div class="quantity-controls">
+                    <button class="quantity-btn decrease" aria-label="Decrease quantity">-</button>
+                    <span class="quantity-value">${item.quantity}</span>
+                    <button class="quantity-btn increase" aria-label="Increase quantity">+</button>
+                </div>
+                <span class="item-total">$${(item.price * item.quantity).toFixed(2)}</span>
+            </div>
         </div>
     `;
 
     return card;
 }
 
-// Infinite Scroll Handler
+function updatePriceBreakdown() {
+    const subtotal = calculateSubtotal();
+    const total = subtotal + DELIVERY_FEE;
+
+    elements.priceBreakdown.innerHTML = `
+        <div class="price-summary">
+            <div class="price-row">
+                <span>Subtotal</span>
+                <span>$${subtotal.toFixed(2)}</span>
+            </div>
+            <div class="price-row">
+                <span>Delivery Fee</span>
+                <span>$${DELIVERY_FEE.toFixed(2)}</span>
+            </div>
+            <div class="price-row total">
+                <span>Total</span>
+                <span>$${total.toFixed(2)}</span>
+            </div>
+        </div>
+        <button id="proceedToDelivery" class="proceed-btn" ${cartItems.length === 0 ? 'disabled' : ''}>
+            <span>Proceed to Delivery</span>
+            <i class="fas fa-arrow-right"></i>
+        </button>
+    `;
+}
+
 function handleScroll() {
     if (isLoading) return;
 
-    const lastCard = elements.orderItems.lastElementChild;
-    if (!lastCard) return;
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
-    const lastCardOffset = lastCard.offsetTop + lastCard.clientHeight;
-    const pageOffset = window.pageYOffset + window.innerHeight;
-
-    if (pageOffset > lastCardOffset - 20) {
+    if (scrollHeight - scrollTop - clientHeight < SCROLL_THRESHOLD) {
         loadMoreItems();
     }
+}
+
+function updateLoadingState(loading) {
+    isLoading = loading;
+    elements.loadingIndicator.style.display = loading ? 'block' : 'none';
 }
 
 function loadMoreItems() {
     if (currentPage * ITEMS_PER_PAGE >= cartItems.length) return;
 
-    isLoading = true;
+    updateLoadingState(true);
     currentPage++;
 
-    renderOrderItems(currentPage);
-    isLoading = false;
+    setTimeout(() => {
+        renderOrderItems(currentPage);
+    }, 500);
 }
 
-function updatePriceDisplay() {
-    const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    elements.subtotal.textContent = `$${subtotal.toFixed(2)}`;
-    elements.total.textContent = `$${(subtotal + DELIVERY_FEE).toFixed(2)}`;
-}
-
-function setupEventListeners() {
-    window.addEventListener('scroll', handleScroll);
-    elements.orderItems?.addEventListener('click', handleQuantityChange);
-    elements.proceedBtn?.addEventListener('click', handleProceedToDelivery);
-}
-
-function handleProceedToDelivery() {
-    if (cartItems.length === 0) {
-        alert('Please add items to your cart before proceeding');
-        return;
-    }
-
-    // Store order summary
-    const orderSummary = {
-        items: cartItems,
-        subtotal: document.getElementById('subtotal').textContent,
-        total: document.getElementById('total').textContent,
-        deliveryFee: '5.00'
-    };
-    localStorage.setItem('orderSummary', JSON.stringify(orderSummary));
-
-    // Navigate to delivery page
-    window.location.href = '/delivery';  // Changed from /location
-});
-    try {
-        const orderSummary = {
-            items: cartItems,
-            subtotal: elements.subtotal.textContent,
-            total: elements.total.textContent,
-            deliveryFee: DELIVERY_FEE
-        };
-
-        localStorage.setItem('orderSummary', JSON.stringify(orderSummary));
-        window.location.href = 'delivery.html';
-    } catch (error) {
-        console.error('Error proceeding to delivery:', error);
-    }
-}
-
-function sanitizeInput(input) {
-    const div = document.createElement('div');
-    div.textContent = input;
-    return div.innerHTML;
-}
