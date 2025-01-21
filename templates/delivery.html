@@ -52,7 +52,53 @@
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" pattern="[0-9]{11}" placeholder="Enter your phone number" required>
+                        <div class="phone-input-container">
+                            <select id="country-code" class="country-code">
+                                <!-- Middle East & North Africa -->
+                                <option value="+20">🇪🇬 +20 (Egypt)</option>
+                                <option value="+966">🇸🇦 +966 (Saudi Arabia)</option>
+                                <option value="+971">🇦🇪 +971 (UAE)</option>
+                                <option value="+974">🇶🇦 +974 (Qatar)</option>
+                                <option value="+965">🇰🇼 +965 (Kuwait)</option>
+                                <option value="+968">🇴🇲 +968 (Oman)</option>
+                                <option value="+973">🇧🇭 +973 (Bahrain)</option>
+                                <option value="+962">🇯🇴 +962 (Jordan)</option>
+                                <option value="+961">🇱🇧 +961 (Lebanon)</option>
+                                <option value="+963">🇸🇾 +963 (Syria)</option>
+                                <option value="+964">🇮🇶 +964 (Iraq)</option>
+                                <option value="+216">🇹🇳 +216 (Tunisia)</option>
+                                <option value="+213">🇩🇿 +213 (Algeria)</option>
+                                <option value="+212">🇲🇦 +212 (Morocco)</option>
+                                <option value="+218">🇱🇾 +218 (Libya)</option>
+                                <option value="+249">🇸🇩 +249 (Sudan)</option>
+
+                                <!-- Europe -->
+                                <option value="+44">🇬🇧 +44 (UK)</option>
+                                <option value="+33">🇫🇷 +33 (France)</option>
+                                <option value="+49">🇩🇪 +49 (Germany)</option>
+                                <option value="+39">🇮🇹 +39 (Italy)</option>
+                                <option value="+34">🇪🇸 +34 (Spain)</option>
+
+                                <!-- North America -->
+                                <option value="+1">🇺🇸 +1 (USA)</option>
+                                <option value="+1">🇨🇦 +1 (Canada)</option>
+
+                                <!-- Asia -->
+                                <option value="+86">🇨🇳 +86 (China)</option>
+                                <option value="+91">🇮🇳 +91 (India)</option>
+                                <option value="+81">🇯🇵 +81 (Japan)</option>
+                                <option value="+82">🇰🇷 +82 (South Korea)</option>
+                            </select>
+                            <input
+                                type="tel"
+                                id="phone"
+                                pattern="[0-9]{8,10}"
+                                placeholder="Phone number without country code"
+                                required
+                                title="Please enter a valid phone number"
+                            >
+                        </div>
+                        <small class="form-hint">Enter your phone number with country code (e.g., +20 1234567890)</small>
                     </div>
                     <div class="form-group">
                         <label for="instructions">Delivery Instructions</label>

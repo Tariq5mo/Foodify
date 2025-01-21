@@ -2,6 +2,7 @@
 let map;
 let marker;
 let searchBox;
+let isOnline = navigator.onLine;
 
 // TomTom API key
 const API_KEY = "gTnO8GY8uqFMsvsF9yz3wZdxMFWBR0kJ";
@@ -23,6 +24,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize map
   function initializeMap() {
+    if (!isOnline) {
+      showError('No internet connection. Please check your connection and try again.');
+      return;
+    }
+
     try {
       map = tt.map({
         key: API_KEY,
@@ -30,6 +36,11 @@ document.addEventListener("DOMContentLoaded", () => {
         center: [31.2357, 30.0444], // Cairo coordinates
         zoom: 13,
         interactive: true,
+      });
+
+      // Add loading error handler
+      map.on('error', (e) => {
+        showError('Failed to load map. Please check your internet connection.');
       });
 
       try {
@@ -77,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     } catch (error) {
       console.error("Map initialization error:", error);
-      showError(error);
+      showError('Failed to initialize map. Please check your internet connection.');
     }
   }
 
@@ -205,6 +216,11 @@ function placeMarker(lngLat) {
 }
 
 function getAddress(coords) {
+  if (!navigator.onLine) {
+    showError('No internet connection. Please check your connection and try again.');
+    return;
+  }
+
   tt.services
     .reverseGeocode({
       key: API_KEY,
@@ -217,7 +233,7 @@ function getAddress(coords) {
       }
     })
     .catch((error) => {
-      showError("Could not fetch address");
+      showError('Could not fetch address. Please check your internet connection.');
       console.error(error);
     });
 }
@@ -239,16 +255,51 @@ function handleLocationError(error) {
   }
 }
 
-function showError(message) {
-  const errorDiv = document.createElement("div");
-  errorDiv.className = "error-message";
+// Add internet connectivity check
+window.addEventListener('online', () => {
+  isOnline = true;
+  showError('Internet connection restored', 'success');
+  // Reinitialize map if it wasn't initialized
+  if (!map && document.getElementById('mapSection').style.display !== 'none') {
+    initializeMap();
+  }
+});
+
+window.addEventListener('offline', () => {
+  isOnline = false;
+  showError('No internet connection. Please check your connection and try again.', 'error');
+});
+
+// Update showError function to handle different types
+function showError(message, type = 'error') {
+  const existingError = document.querySelector('.error-message');
+  if (existingError) {
+    existingError.remove();
+  }
+
+  const errorDiv = document.createElement('div');
+  errorDiv.className = `error-message ${type === 'success' ? 'success' : ''}`;
   errorDiv.textContent = message;
-  document.querySelector(".delivery-container").prepend(errorDiv);
-  setTimeout(() => errorDiv.remove(), 5000);
+
+  document.body.appendChild(errorDiv);
+
+  // Remove the message after 5 seconds unless it's a no-internet message
+  if (message !== 'No internet connection. Please check your connection and try again.') {
+    setTimeout(() => {
+      if (errorDiv && errorDiv.parentNode) {
+        errorDiv.remove();
+      }
+    }, 5000);
+  }
 }
 
-// Add this new function to handle manual searches
+// Add connection check to API calls
 async function searchLocation(query) {
+  if (!navigator.onLine) {
+    showError('No internet connection. Please check your connection and try again.');
+    return;
+  }
+
   try {
     const response = await tt.services
       .fuzzySearch({
@@ -278,6 +329,6 @@ async function searchLocation(query) {
     }
   } catch (error) {
     console.error("Search error:", error);
-    showError("Failed to search location");
+    showError("Failed to search location. Please check your internet connection.");
   }
 }

@@ -103,7 +103,7 @@ body {
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 12px;
+    padding: 8px;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 5px;
@@ -151,25 +151,36 @@ body {
     outline-color: #ff4444;
 }
 
+/* Update error message styling */
 .error-message {
     position: fixed;
     top: 20px;
-    right: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     padding: 15px 25px;
     background: rgba(255, 68, 68, 0.9);
     color: white;
     border-radius: 5px;
     backdrop-filter: blur(10px);
     animation: slideIn 0.3s ease;
+    z-index: 10000; /* Make sure it appears above the map */
+    text-align: center;
+    min-width: 300px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Success message style */
+.error-message.success {
+    background: rgba(40, 167, 69, 0.9);
 }
 
 @keyframes slideIn {
     from {
-        transform: translateX(100%);
+        transform: translate(-50%, -100%);
         opacity: 0;
     }
     to {
-        transform: translateX(0);
+        transform: translate(-50%, 0);
         opacity: 1;
     }
 }
@@ -193,6 +204,11 @@ body {
     width: 100%;
     max-width: 400px;
     margin: 10px;
+    background: transparent !important;
+}
+
+.tt-search-box-input-container {
+    background: transparent !important;
 }
 
 /* TomTom SearchBox styling */
@@ -220,19 +236,180 @@ body {
     background: rgba(0, 0, 0, 0.8);  /* Darker background when focused */
 }
 
-.tt-search-box-result-list {
-    background: rgba(0, 0, 0, 0.9);
-    color: #e78f38;
-    border: 1px solid rgba(231, 143, 56, 0.3);
+/* Enhanced TomTom SearchBox results list styling with complete scrollbar hiding */
+.tt-search-box .tt-search-box-result-list,
+.tt-search-box-result-list,
+.tt-search-box-result-list-container {
+    background: rgba(20, 20, 20, 0.95) !important;  /* Dark semi-transparent background */
+    border: 1px solid rgba(231, 143, 56, 0.2);
+    border-radius: 12px;
+    margin-top: 8px;
+    padding: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    max-height: 300px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
+/* Hide WebKit scrollbars comprehensively */
+.tt-search-box .tt-search-box-result-list::-webkit-scrollbar,
+.tt-search-box .tt-search-box-result-list::-webkit-scrollbar-track,
+.tt-search-box .tt-search-box-result-list::-webkit-scrollbar-thumb,
+.tt-search-box-result-list::-webkit-scrollbar,
+.tt-search-box-result-list::-webkit-scrollbar-track,
+.tt-search-box-result-list::-webkit-scrollbar-thumb,
+.tt-search-box-result-list-container::-webkit-scrollbar,
+.tt-search-box-result-list-container::-webkit-scrollbar-track,
+.tt-search-box-result-list-container::-webkit-scrollbar-thumb,
+.tt-search-box div::-webkit-scrollbar,
+.tt-search-box div::-webkit-scrollbar-track,
+.tt-search-box div::-webkit-scrollbar-thumb {
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+    display: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+
+/* Individual result styling */
 .tt-search-box-result {
-    color: #e78f38;  /* Orange text for results */
+    color: rgba(255, 255, 255, 0.9);
     padding: 12px 16px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    margin: 8px 0;
+    border-radius: 8px;
+    background: rgba(40, 40, 40, 0.8);
+    border: 1px solid rgba(231, 143, 56, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .tt-search-box-result:hover,
 .tt-search-box-result.selected {
-    background: rgba(231, 143, 56, 0.2);
+    background: rgba(231, 143, 56, 0.15);
     color: #fff;
+    border-color: #e78f38;
+    transform: translateY(-1px);
+}
+
+/* Additional highlight for matched text */
+.tt-search-box-result-match {
+    color: #e78f38; /* Orange highlight for matched text */
+    font-weight: 500;
+}
+
+/* Phone input specific styling */
+.phone-input-container input[type="tel"],
+.country-code {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    color: #e78f38; /* Changed from white to orange */
+    padding: 12px;
+}
+
+.phone-input-container input[type="tel"] {
+    flex: 1;
+}
+
+.country-code {
+    min-width: 120px;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23e78f38' d='M6 9L0 0h12'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+}
+
+/* Improve visibility of placeholder text */
+.phone-input-container input[type="tel"]::placeholder {
+    color: rgba(231, 143, 56, 0.6); /* Semi-transparent orange */
+}
+
+/* Style for focused state */
+.phone-input-container input[type="tel"]:focus,
+.country-code:focus {
+    outline: none;
+    border-color: #e78f38;
+    box-shadow: 0 0 5px rgba(231, 143, 56, 0.3);
+}
+
+/* Style for form hint */
+.form-hint {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+
+/* TomTom SearchBox Results Styling */
+.tt-search-box-result-list {
+    background: transparent !important;  /* Remove background */
+    border: none;
+    margin-top: 8px;
+    padding: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    backdrop-filter: none;
+    box-shadow: none;
+}
+
+/* Individual Result Card Styling */
+.tt-search-box-result {
+    margin: 8px 0;
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(40, 40, 40, 0.95); /* Darker background */
+    border: 1px solid rgba(231, 143, 56, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Result Title */
+.tt-search-box-result span:first-child {
+    color: #e78f38;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Result Address */
+.tt-search-box-result span:last-child {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+}
+
+/* Hover State */
+.tt-search-box-result:hover {
+    background: rgba(231, 143, 56, 0.1);
+    border-color: rgba(231, 143, 56, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Selected State */
+.tt-search-box-result.selected {
+    background: rgba(231, 143, 56, 0.1);
+    border-color: rgba(231, 143, 56, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Matched Text */
+.tt-search-box-result-match {
+    color: #fff;
+    background: rgba(231, 143, 56, 0.3);
+    padding: 0 4px;
+    border-radius: 3px;
+}
+
+/* Separator Between Results */
+.tt-search-box-result:not(:last-child) {
+    border-bottom: 1px solid rgba(231, 143, 56, 0.1);
 }
