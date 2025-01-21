@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """This module defines a base class for all models in our foodify"""
-
 import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, DateTime

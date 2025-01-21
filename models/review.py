@@ -6,9 +6,6 @@ from models.base_model import BaseModel, Base
 class Review(BaseModel, Base):
     """Review model"""
 
-    client_id = Column(String(60), ForeignKey('clients.id', ondelete="CASCADE"), nullable=False)
-    restaurant_id = Column(String(60), ForeignKey('restaurants.id', name='rstau_ibfk_1', ondelete="CASCADE"), nullable=False)
-
     __tablename__ = "reviews"
 
     client_id = Column(
@@ -23,7 +20,6 @@ class Review(BaseModel, Base):
         ),
         nullable=False,
     )
-
     rating = Column(Integer, nullable=False)
     comment = Column(Text, nullable=True)
 

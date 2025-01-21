@@ -38,23 +38,6 @@ def close_db(e=None):
     """Cleanup function to be called after each request"""
     storage.close()
 
-# Error Handlers
-
-# 404 Error
-@foodify_app.errorhandler(404)
-def not_found_error(error):
-    return render_template('404.html'), 404
-
-# 500 Error
-@foodify_app.errorhandler(500)
-def internal_error(error):
-    return render_template('500.html'), 500
-
-# 403 Error
-@foodify_app.errorhandler(403)
-def forbidden_error(error):
-    return render_template('403.html'), 403
-
 
 # Import routes after login_manager is initialized
 from routes.login import login_routes, logout_routes
@@ -64,6 +47,7 @@ from routes.welcome import welcome_routes
 from routes.order import order_routes
 from routes.payment import payment_routes
 from routes.all_orders_and_review import review_routes
+from routes.delivery import delivery_routes  # Changed from location_routes
 
 # Register blueprints
 foodify_app.register_blueprint(login_routes)
@@ -74,6 +58,7 @@ foodify_app.register_blueprint(welcome_routes)
 foodify_app.register_blueprint(order_routes)
 foodify_app.register_blueprint(payment_routes)
 foodify_app.register_blueprint(review_routes)
+foodify_app.register_blueprint(delivery_routes)  # Changed from location_routes
 
 # Register cleanup function with Flask app
 foodify_app.teardown_appcontext(close_db)
