@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Setting up the HTML document with language and character encoding -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foodify</title>
+    <!-- Including font from Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Helvetica+Neue&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Linking external CSS file -->
+    <link rel="stylesheet" href="../static/css/login_signup.css" />
+    <link rel="stylesheet" href="../static/css/welcome.css" />
+    <link rel="stylesheet" href="../static/css/shared/cart.css">
+    <!-- Adding a favicon for the website -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="../static/images/foodify_logo.png"
+      sizes="48x48"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
+    />
+  </head>
+  <body class="{{ 'user-logged-in' if current_user.is_authenticated else '' }}">
+    <!-- Navigation bar -->
+    <nav>
+        <a href="#" class="logo">
+            <!-- Website logo -->
+            <img src="../static/images/foodify_logo.png" alt="Logo">
+            <h1>Foodify</h1>
+        </a>
+        <ul>
+            <li><a href="{{ url_for('review_routes.all_orders_and_review') }}">Home</a></li>
+            <li><a href="welcome.html#restaurants">Restaurants</a></li>
+            <li><a href="welcome.html#search">Menu</a></li>
+            <li><a href="welcome.html#footer">About</a></li>
+            <li class="cart-icon-container">
+                <a href="{{ url_for('review_routes.all_orders_and_review') }}">
+                    <img src="../static/images/grocery-cart.png" alt="Cart">
+                    <span id="cart-count" class="cart-count-hidden"></span>
+                </a>
+            </li>
+        </ul>
+        {% if current_user.is_authenticated %}
+            <!-- Logout and User buttons -->
+            <div class="dropdown show">
+                <button class="btn btn-dark bg-dark dropdown-toggle" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    My Account
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li class="nav-item">
+                        <a href="{{ url_for('setting_routes.setting') }}" class="dropdown-item">Setting</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('logout_routes.logout') }}" class="dropdown-item">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        {% else %}
+            <!-- Login and Sign-up buttons -->
+            <a href="{{ url_for('login_routes.login') }}">
+                <button id="loginBtn">Login</button>
+            </a>
+            <a href="{{ url_for('signup_routes.signup') }}">
+                <button id="signUpBtn">Sign Up</button>
+            </a>
+        {% endif%}
+    </nav>
+
+    <!-- Home section -->
+    <section class="home">
+        <div class="content">
+            <h2>"Dining Made Easy, Right at Home 🏠🛵"</h2>
+            <p>The Best Online Food Ordering System ❤️</p>
+            <a href="#restaurants"><button id="restaurants">Order Now</button></a>
+            <button class="know_more" id="knowMoreButton">Know More</button>
+        </div>
+        <!-- Featured image for the home section -->
+        <img src="../static/images/welcome_burger.png" alt="Double Beef Burger">
+    </section>
+
+    <!-- Modal Structure -->
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h2>Welcome to Foodify!</h2>
+        <p>
+          At <strong>Foodify</strong>, we aim to revolutionize the way you enjoy
+          dining. From sizzling hot pizzas to refreshing smoothies, we bring the
+          best meals from your favorite restaurants right to your doorstep. Say
+          goodbye to long queues and waiting times — order your food in just a
+          few clicks! 🚀
+        </p>
+        <p>
+          Whether you're planning a family dinner, a romantic date, or a solo
+          treat, Foodify ensures the fastest delivery, best deals, and most
+          delicious options tailored just for you. Hungry yet? 🍔🍕
+        </p>
+      </div>
+    </div>
+
+    <!-- Restaurants menu section -->
+    <section class="menu">
+      <ul class="resutrant">
+        <!-- List of restaurants -->
+        <li class="restaurant">
+          <img
+            src="../static/images/menu_items/Burger_Blast/logo.jpeg"
+            alt="Burger Blast"
+          />
+          <h3>Burger Blast</h3>
+        </li>
+        <li class="restaurant">
+          <img
+            src="../static/images/menu_items/Pizza_Point/logo.jpeg"
+            alt="Pizza Point"
+          />
+          <h3>Pizza Point</h3>
+        </li>
+        <li class="restaurant">
+          <img
+            src="../static/images/menu_items/Healthy_Bites/logo.jpeg"
+            alt="Healthy Bites"
+          />
+          <h3>Healthy Bites</h3>
+        </li>
+        <li class="restaurant">
+          <img
+            src="../static/images/menu_items/Taco_Tower/logo.jpeg"
+            alt="Taco Tower"
+          />
+          <h3>Taco Tower</h3>
+        </li>
+        <li class="restaurant">
+          <img
+            src="../static/images/menu_items/Wings_and_Things/logo.jpeg"
+            alt="Wings&Things"
+          />
+          <h3>Wings&Things</h3>
+        </li>
+        <li class="restaurant">
+          <img
+            src="../static/images/menu_items/Green_Plate/logo.jpeg"
+            alt="Green Plates"
+          />
+          <h3>Green Plates</h3>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Search and filter section -->
+    <div class="search_color">
+      <section class="search" id="search">
+        <div class="search-container">
+          <!-- Search input field -->
+          <input type="text" id="search_bar" placeholder="Search..." />
+          <button id="searchButton">
+            <img src="../static/images/search.png" alt="Search icon" />
+          </button>
+        </div>
+        <!-- Dropdown filter menu -->
+        <select id="filter">
+          <option value="All">All Restaurants</option>
+          <option value="Burger Blast">Burger Blast</option>
+          <option value="Pizza Point">Pizza Point</option>
+          <option value="Healthy Bites">Healthy Bites</option>
+          <option value="Taco Tower">Taco Tower</option>
+          <option value="Wings and Things">Wings and Things</option>
+          <option value="Green Plate">Green Plate</option>
+        </select>
+      </section>
+
+      <!-- Meals section -->
+      <section class="meals">
+        <!-- Meals will be dynamically inserted by search.js -->
+      </section>
+
+      <!-- Pagination section -->
+      <div class="pagination">
+        <a href="#" id="prevPage" class="page-nav">Previous</a>
+        <div id="pageNumbers" class="page-numbers">
+          <!-- Page numbers will be dynamically inserted here by JavaScript -->
+        </div>
+        <a href="#" id="nextPage" class="page-nav">Next</a>
+      </div>
+    </div>
+
+    <!-- Footer section -->
+    <footer>
+      <div class="footer-content" id="footer">
+        <div class="about">
+          <h3>About Us</h3>
+          <p>
+            At <strong>{Foodify}</strong>, we are passionate about bringing you
+            the finest meals directly to your doorstep. We understand the
+            importance of quality, convenience, and speed, which is why we focus
+            on offering a wide variety of delicious dishes prepared with fresh
+            ingredients by top chefs. Our goal is to provide an exceptional
+            dining experience, whether you're craving a hearty meal, a quick
+            snack, or something special for a celebration. We believe in making
+            every meal a delightful experience, so we take pride in offering not
+            only great food but also fast and reliable delivery. With our
+            easy-to-use platform, you can explore a range of cuisines from
+            around the world, and have them delivered to your home or office in
+            no time. Our commitment to customer satisfaction means we
+            continuously strive to improve our service, ensuring that you enjoy
+            a seamless ordering process, timely deliveries, and high-quality
+            meals every time. Whether you’re at home, at work, or celebrating an
+            occasion, we are here to make sure you have the best food at your
+            fingertips. Join us on a culinary journey today and experience the
+            best of food, service, and convenience all in one place!
+          </p>
+        </div>
+      </div>
+      <div class="contact">
+        <h3>Contact Us</h3>
+        <div class="team">
+          <!-- Team member profiles -->
+          <div class="team-member">
+            <a href="https://www.linkedin.com/in/johnsamy2004/" target="_blank">
+              <img src="../static/images/Team/John Samy.jpeg" alt="John Samy" />
+              <p class="name">John Samy</p>
+            </a>
+          </div>
+          <div class="team-member">
+            <a
+              href="https://www.linkedin.com/in/ahmedbentabet/"
+              target="_blank"
+            >
+              <img
+                src="../static/images/Team/Ahmed Bentabet.jpeg"
+                alt="Ahmed Bentabet"
+              />
+              <p class="name">Ahmed Bentabet</p>
+            </a>
+          </div>
+          <div class="team-member">
+            <a
+              href="https://www.linkedin.com/in/tariq-omer-8599381ba/"
+              target="_blank"
+            >
+              <img
+                src="../static/images/Team/Tariq Omer.jpeg"
+                alt="Tariq Omer"
+              />
+              <p class="name">Tariq Omer</p>
+            </a>
+          </div>
+          <div class="team-member">
+            <a
+              href="https://www.linkedin.com/in/abobakr-elgandy/"
+              target="_blank"
+            >
+              <img
+                src="../static/images/Team/Abobakr Elgandy.jpeg"
+                alt="AboBakr Elgandy"
+              />
+              <p class="name">Abobakr Elgandy</p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- CopyRight -->
+      <div class="footer-bottom">
+        <p>&copy; 2025 All Rights Reserved</p>
+      </div>
+    </footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../static/js/login_signup.js"></script>
+    <script src="../static/js/script.js"></script>
+    <script src="../static/js/search.js"></script>
+    <script src="../static/js/payment.js"></script>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodify - Restaurants</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- ================== Header ===================== -->
+    <!-- =============================================== -->
+<!-- header.html -->
+<div class="header">
+    <img src="header_img.png" id="menu" alt="Menu">
+    <img src="logo.png" class="logo" alt="Logo">
+    <div class="nav">
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="locations.html">Locations</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+    <div class="search-cart">
+        <input type="text" placeholder="Search...">
+        <a href="payment.html" class="cart-icon">
+            <img src="basket.png" alt="Cart">
+            <span id="cart-count">0</span>
+        </a>
+    </div>
+</div>
+<!-- ================== End Header ===================== -->
+
+
+    <!-- ================== Restaurants ===================== -->
+    <div class="restaurants" id="restaurants">
+        <h1 class="title">Our Restaurants</h1>
+        <div class="container">
+            <div class="restaurant-card" data-restaurant="restaurant1">
+                <img src="menu1.png" alt="Restaurant 1">
+            </div>
+            <div class="restaurant-card" data-restaurant="restaurant2">
+                <img src="menu2.png" alt="restaurant2">
+                <h3>Pizza Point</h3>
+            </div>
+            <div class="restaurant-card" data-restaurant="restaurant3">
+                <img src="menu3.png" alt="Restaurant 3">
+                <h3>Taco Tower</h3>
+            </div>
+            <div class="restaurant-card" data-restaurant="restaurant4">
+                <img src="menu4.png" alt="Restaurant 4">
+                <h3>Wings & Things</h3>
+            </div>
+            <div class="restaurant-card" data-restaurant="restaurant5">
+                <img src="menu5.png" alt="Restaurant 5">
+                <h3>Green Plate</h3>
+            </div>
+            <div class="restaurant-card" data-restaurant="restaurant6">
+                <img src="menu6.png" alt="Restaurant 6">
+                <h3>Healthy Bites</h3>
+            </div>
+        </div>
+    </div>
+    <!-- ================== End Restaurants ===================== -->
+
+    <!-- ================== Meals ===================== -->
+    <div class="meals" id="meals">
+        <h1 class="title">Meals</h1>
+        <div class="container">
+            <!-- Meal cards will be dynamically added here -->
+        </div>
+    </div>
+    <!-- ================== End Meals ===================== -->
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -3,6 +3,7 @@ from flask_login import current_user, login_required
 from models import storage
 from sqlalchemy.orm import joinedload
 from models.order import Order
+from models.order_item import OrderItem
 from models.menu_item import MenuItem
 
 payment_routes = Blueprint("payment_routes", __name__)
@@ -63,29 +64,30 @@ def payment():
 def get_totals():
     """Get order totals for AJAX updates"""
     try:
-        # Using the new session_scope for better transaction management
         with storage.session_scope() as session:
+            # Update query to use proper model relationships
             active_order = (
                 session.query(Order)
                 .filter_by(client_id=current_user.id, status="active")
-                .options(joinedload("order_items"))
+                .options(
+                    joinedload(Order.order_items)
+                    .joinedload(OrderItem.menu_item)
+                )
                 .first()
             )
 
-            subtotal = (
-                float(active_order.total_price) if active_order else 0.00
-            )
+            subtotal = float(
+                active_order.total_price) if active_order else 0.00
             delivery_fee = 5.00
             total = subtotal + delivery_fee
 
-            return jsonify(
-                {
-                    "success": True,
-                    "subtotal": "{:.2f}".format(subtotal),
-                    "delivery_fee": "{:.2f}".format(delivery_fee),
-                    "total": "{:.2f}".format(total),
-                }
-            )
+            return jsonify({
+                "success": True,
+                "subtotal": "{:.2f}".format(subtotal),
+                "delivery_fee": "{:.2f}".format(delivery_fee),
+                "total": "{:.2f}".format(total),
+            })
 
     except Exception as e:
+        print(f"Payment totals error: {e}")
         return jsonify({"error": str(e)}), 500

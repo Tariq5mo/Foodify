@@ -32,9 +32,7 @@ class Order(BaseModel, Base):
     order_date = Column(DateTime, default=datetime.utcnow)
 
     client = relationship("Client", back_populates="orders")
-    order_items = relationship(
-        "OrderItem", back_populates="order", cascade="all, delete-orphan"
-    )
+    order_items = relationship("OrderItem", back_populates="order")
 
     def __init__(self, *args, **kwargs):
         """Initialize order"""

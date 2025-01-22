@@ -20,15 +20,19 @@ def update_cart():
             menu_item_id = data.get("menu_item_id")
             action = data.get("action")
 
-            # Query with session
+            # Query with proper relationship loading
             menu_item = session.query(MenuItem).get(menu_item_id)
             if not menu_item:
                 return jsonify({"error": "Item not found"}), 404
 
+            # Use proper relationship attributes
             active_order = (
                 session.query(Order)
                 .filter_by(client_id=current_user.id, status="active")
-                .options(joinedload("order_items"))
+                .options(
+                    joinedload(Order.order_items)
+                    .joinedload(OrderItem.menu_item)
+                )
                 .first()
             )
 
@@ -36,12 +40,14 @@ def update_cart():
                 if action == "decrease":
                     return jsonify({"error": "No active order found"}), 400
                 active_order = Order(
-                    client_id=current_user.id, status="active", total_price=0
+                    client_id=current_user.id,
+                    status="active",
+                    total_price=0
                 )
-                storage.new(active_order)
-                storage.save()
+                session.add(active_order)
+                session.commit()
 
-            # Find order item
+            # Find order item using relationship
             order_item = None
             for item in active_order.order_items:
                 if item.menu_item_id == menu_item_id:
@@ -52,31 +58,23 @@ def update_cart():
                 if not order_item:
                     return jsonify({"error": "Item not in cart"}), 400
 
-                # Calculate new price before updating quantity
-                new_total = float(active_order.total_price) - float(
-                    menu_item.price
-                )
+                new_total = float(active_order.total_price) - \
+                    float(menu_item.price)
 
                 if order_item.quantity <= 1:
-                    # Remove item and update order
-                    active_order.order_items.remove(order_item)
-                    storage.delete(order_item)
+                    session.delete(order_item)
                     active_order.total_price = new_total
 
-                    # If no items left, cancel order
                     if not active_order.order_items:
                         active_order.status = "cancelled"
-                        storage.delete(active_order)
-                        storage.save()
-                        return jsonify(
-                            {
-                                "success": True,
-                                "order": None,
-                                "item": {"id": menu_item_id, "quantity": 0},
-                            }
-                        )
+                        session.delete(active_order)
+                        session.commit()
+                        return jsonify({
+                            "success": True,
+                            "order": None,
+                            "item": {"id": menu_item_id, "quantity": 0}
+                        })
                 else:
-                    # Decrease quantity and update price
                     order_item.quantity -= 1
                     active_order.total_price = new_total
 
@@ -87,29 +85,26 @@ def update_cart():
                     order_item = OrderItem(
                         order_id=active_order.id,
                         menu_item_id=menu_item_id,
-                        quantity=1,
+                        quantity=1
                     )
-                    storage.new(order_item)
+                    session.add(order_item)
                 active_order.total_price = float(
-                    active_order.total_price or 0
-                ) + float(menu_item.price)
+                    active_order.total_price or 0) + float(menu_item.price)
 
-            storage.save()
+            session.commit()
 
-            return jsonify(
-                {
-                    "success": True,
-                    "order": {
-                        "id": active_order.id,
-                        "total_price": float(active_order.total_price),
-                        "status": active_order.status,
-                    },
-                    "item": {
-                        "id": menu_item_id,
-                        "quantity": order_item.quantity if order_item else 0,
-                    },
+            return jsonify({
+                "success": True,
+                "order": {
+                    "id": active_order.id,
+                    "total_price": float(active_order.total_price),
+                    "status": active_order.status
+                },
+                "item": {
+                    "id": menu_item_id,
+                    "quantity": order_item.quantity if order_item else 0
                 }
-            )
+            })
 
     except Exception as e:
         print(f"Cart update error: {e}")
