@@ -1,88 +1,104 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const orderItems = document.getElementById('orderItems');
-    const itemizedPrices = document.getElementById('itemizedPrices');
-    const subtotalElement = document.getElementById('subtotal');
-    const totalElement = document.getElementById('total');
-    const proceedBtn = document.getElementById('proceedToDelivery');
-    const deliveryFee = 5.00;
+    const ordersContainer = document.querySelector('.orders-container');
+    const ordersLeft = document.getElementById('orders-left'); // Ensure it uses the correct ID
 
-    function updateOrderSummary() {
-        orderItems.innerHTML = '';
-        itemizedPrices.innerHTML = '';
-        let subtotal = 0;
+    // Event delegation for increase/decrease buttons
+    ordersContainer.addEventListener('click', (event) => {
+        const isIncreaseButton = event.target.classList.contains('increase');
+        const isDecreaseButton = event.target.classList.contains('decrease');
 
-        cartItems.forEach(item => {
-            // Create order item box
-            const orderItem = document.createElement('div');
-            orderItem.className = 'order-item';
-            orderItem.innerHTML = `
-                <img src="${item.image || 'default-meal.jpg'}" alt="${item.name}">
-                <div class="item-details">
-                    <h3>${item.name}</h3>
-                    <div class="item-controls">
-                        <div class="quantity-controls">
-                            <button class="quantity-btn decrease" data-id="${item.id}">-</button>
-                            <span class="quantity">${item.quantity}</span>
-                            <button class="quantity-btn increase" data-id="${item.id}">+</button>
-                        </div>
-                        <button class="remove-btn" data-id="${item.id}">Remove</button>
-                    </div>
-                </div>
-                <div class="item-price">$${(item.price * item.quantity).toFixed(2)}</div>
-            `;
-            orderItems.appendChild(orderItem);
+        if (isIncreaseButton || isDecreaseButton) {
+            const mealElement = event.target.closest('.meal');
+            const quantityElement = mealElement.querySelector('.quantity-value');
+            let currentQuantity = parseInt(quantityElement.dataset.quantity, 10);  // price here
 
-            // Add to itemized prices
-            const itemPrice = document.createElement('div');
-            itemPrice.className = 'itemized-price';
-            itemPrice.innerHTML = `
-                <span>${item.name} x${item.quantity}</span>
-                <span>$${(item.price * item.quantity).toFixed(2)}</span>
-            `;
-            itemizedPrices.appendChild(itemPrice);
+            if (isIncreaseButton) {
+                currentQuantity++;
+            } else if (isDecreaseButton && currentQuantity > 0) {
+                currentQuantity--;
+            }
 
-            subtotal += item.price * item.quantity;
-        });
+            if (currentQuantity === 0) {
+                mealElement.remove();
+            } else {
+                quantityElement.dataset.quantity = currentQuantity;
+                quantityElement.textContent = currentQuantity;
+            }
 
-        subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
-        totalElement.textContent = `$${(subtotal + deliveryFee).toFixed(2)}`;
-
-        // Update proceed button state
-        proceedBtn.disabled = cartItems.length === 0;
-    }
-
-    // Event delegation for quantity controls
-    orderItems.addEventListener('click', (e) => {
-        if (e.target.classList.contains('quantity-btn')) {
-            const itemId = e.target.dataset.id;
-            const isIncrease = e.target.classList.contains('increase');
-            updateItemQuantity(itemId, isIncrease);
-            updateOrderSummary();
+            updateSubtotalAndTotal();
+            checkScrollbar(); // Update scroll visibility when content changes
         }
     });
 
-    updateOrderSummary();
-});
+    // Function to calculate and update the subtotal and total prices
+    function updateSubtotalAndTotal() {
+        let subtotal = 0;
+        const meals = document.querySelectorAll('.meal');
 
-document.getElementById('proceedToDelivery').addEventListener('click', () => {
-    // Check if cart has items
-    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        meals.forEach(meal => {
+            const price = parseFloat(meal.querySelector('h2').textContent.replace('$', ''));
+            const quantity = parseInt(meal.querySelector('.quantity-value').dataset.quantity, 10);
+            subtotal += price * quantity;
+        });
 
-    if (cartItems.length === 0) {
-        alert('Your cart is empty! Please add items before proceeding.');
-        return;
+        // Update subtotal
+        document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+
+        // Check if subtotal is zero, if so set total to zero
+        let total = subtotal + 5.00; // Add delivery fee
+        if (subtotal === 0) {
+            total = 0;  // Set total to zero when subtotal is zero
+        }
+        document.getElementById('total').textContent = `$${total.toFixed(2)}`;
     }
 
-    // Store order summary
-    const orderSummary = {
-        items: cartItems,
-        subtotal: document.getElementById('subtotal').textContent,
-        total: document.getElementById('total').textContent,
-        deliveryFee: '5.00'
-    };
-    localStorage.setItem('orderSummary', JSON.stringify(orderSummary));
+    // Function to handle the scroll effect when "View More" is clicked
+    const viewMoreBtn = document.getElementById('view-more-btn');
+    viewMoreBtn.addEventListener('click', () => {
+        ordersLeft.scrollTo({
+            top: ordersLeft.scrollHeight,
+            behavior: 'smooth'
+        });
+    });
 
-    // Navigate to delivery page
-    window.location.href = '/delivery';  // Changed from /location
+    // Function to handle the scroll and view more functionality with smooth scroll
+    document.getElementById("view-more-btn").addEventListener("click", function () {
+        const mealsContainer = document.getElementById("orders-left");
+        mealsContainer.scrollTo({
+            top: mealsContainer.scrollTop + 400,
+            behavior: "smooth"
+        });
+    });
+
+    // Function to check and hide the scrollbar when appropriate
+    function checkScrollbar() {
+        const ordersLeft = document.getElementById('orders-left');
+        const meals = document.querySelectorAll('.meal');
+        if (meals.length <= 2) {
+            ordersLeft.style.overflowY = 'hidden'; // Hide scroll if there are 2 or fewer meals
+        } else {
+            ordersLeft.style.overflowY = 'scroll'; // Show scroll if there are more than 2 meals
+        }
+    }
+
+    // Call checkScrollbar on page load to adjust scrollbar visibility
+    checkScrollbar();
+
+    // Offer code logic to set the total to zero when the correct offer code is entered
+    const offerCodeInput = document.getElementById('offer-code-input');
+    const offerCodeContainer = document.getElementById('offer-code-container');
+    const offerCodeMessage = document.getElementById('offer-code-message');
+    
+    offerCodeInput.addEventListener('input', () => {
+        const offerCode = offerCodeInput.value.trim();
+        if (offerCode === 'alx') {
+            offerCodeMessage.textContent = 'Offer code applied! Total is now $0.';
+            updateSubtotalAndTotal();  // Update the totals to reflect the offer
+        } else {
+            offerCodeMessage.textContent = 'Enter a valid offer code';
+        }
+    });
+
+    // Initial update for subtotal and total when page loads
+    updateSubtotalAndTotal();
 });
-
