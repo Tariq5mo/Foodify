@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Orders - Foodify</title>
-    <link rel="stylesheet" href="../static/Styles/order.css">
+    <link rel="stylesheet" href="order.css">
     <link rel="icon" type="image/png" href="../static/images/logo.png" sizes="48x48">
 </head>
 
@@ -37,59 +37,65 @@
     </nav>
 
     <div class="orders-container">
-        <h1>Your Orders</h1>
-
+        <div class="orders-left" id="orders-left">
+            <h1>Your Orders</h1>
+            <!-- View More Button -->
+            <button class="view-more" id="view-more-btn">Load More...</button>
+             
             <div class="meal" data-meal-id="1">
-                <!-- Meal details -->
-                <img src="../static/images/Double Beef Burger.png" alt="Meal Image">
+                <img src="welcome_burger.png" alt="Meal Image">
                 <hr>
                 <div class="meal-info">
-                    <h2>$10,00</h2>
-                    <h3>meal name</h3>
+                    <h2>$10.00</h2>
+                    <h3>Double Beef Burger</h3>
                     <div class="meal-footer">
                         <div class="quantity">
                             <img src="../static/images/reduce.png" class="decrease" alt="Reduce quantity">
-                            <span class="quantity-value" data-quantity="0">0</span> <!-- Dynamic quantity here -->
+                            <span class="quantity-value" data-quantity="0">0</span>
                             <img src="../static/images/add.png" class="increase" alt="Increase quantity">
                         </div>
                     </div>
                 </div>
             </div>
-	<div id="loadingIndicator" class="loading-indicator" style="display: none;">
-		<i class="fas fa-spinner fa-spin"></i>
-		Loading more items...
-	</div>
+            
+            <!-- Additional meal entries here -->
 
-        <div class="price-breakdown">
-            <h2>Price Details</h2>
-            <div id="itemizedPrices">
-                <!-- Individual item prices here -->
-            </div>
-
-            <div class="order-summary">
-                <div class="subtotal">
-                    <span>Subtotal:</span>
-                    <span id="subtotal">$0.00</span>
-                </div>
-                <div class="delivery-fee">
-                    <span>Delivery Fee:</span>
-                    <span>$5.00</span>
-                </div>
-                <div class="total">
-                    <span>Total:</span>
-                    <span id="total">$0.00</span>
-                </div>
+            <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i>
+                Loading more items...
             </div>
         </div>
 
-        <button id="proceedToDelivery" class="proceed-btn">
-            <span>Proceed to Delivery</span>
-            <i class="fas fa-arrow-right"></i>
-        </button>
-    </div>
-</body>
+        <div class="orders-right">
+            <div class="price-breakdown">
+                <h2>Price Details</h2>
+                <div id="itemizedPrices"></div>
+                <div class="order-summary">
+                    <div class="subtotal">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">$0.00</span>
+                    </div>
+                    <div class="delivery-fee">
+                        <span>Delivery Fee:</span>
+                        <span>$5.00</span>
+                    </div>
+                    <div class="total">
+                        <label for="offer-code" class="offer-code-label">Offer Code</label>
+                        <input type="text" id="offer-code" class="offer-code-input" placeholder="Enter offer code">
+                        <span>Total:</span>
+                        <span id="total">$0.00</span>
+                    </div>
+                </div>
+            </div>
 
-<!-- Footer section -->
+            <button id="proceedToDelivery" class="proceed-btn">
+                <span>Proceed to Delivery</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Footer section -->
 <footer>
     <div class="footer-content" id="footer">
         <div class="about">
@@ -148,7 +154,7 @@
         <p>&copy; 2025 All Rights Reserved</p>
     </div>
 </footer>
-<script src="../static/Scripts/order.js"></script>
+<script src="order.js"></script>
 
 </html>
 
