@@ -1,40 +1,23 @@
 from flask import Blueprint, render_template, jsonify, request
 from flask_login import current_user, login_required
 from models import storage
-from models.order import Order
 from models.review import Review
 from models.restaurant import Restaurant
 
-review_routes = Blueprint("review_routes", __name__)
+
+contact_routes = Blueprint('contact_routes', __name__)
 
 
-@review_routes.route("/all_orders_and_review")
-@login_required
-def all_orders_and_review():
-    """Display all orders and review page"""
-    try:
-        # Get all orders for current user
-        user_orders = []
-        orders = storage.all(Order).values()
-        for order in orders:
-            if order.client_id == current_user.id:
-                user_orders.append(order)
-
-        # Get all restaurants for reviews
-        restaurants = storage.all(Restaurant).values()
-
-        return render_template(
-            "all_orders_and_review.html",
-            orders=user_orders,
-            restaurants=restaurants,
-        )
-
-    except Exception as e:
-        storage.rollback()
-        return jsonify({"error": str(e)}), 500
+@contact_routes.route("/contact")
+def contact():
+    """Render contact page with restaurants list"""
+    restaurants = storage.all(Restaurant).values()
+    return render_template("contact.html",
+                           title="Contact Us",
+                           restaurants=restaurants)
 
 
-@review_routes.route("/api/v1/submit_review", methods=["POST"])
+@contact_routes.route("/api/v1/submit_review", methods=["POST"])
 @login_required
 def submit_review():
     """Handle review submission"""

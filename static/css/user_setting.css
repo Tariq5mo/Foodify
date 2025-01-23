@@ -27,6 +27,8 @@ nav {
     backdrop-filter: blur(10px);
 }
 
+/* Remove cart styles - now in shared/cart.css */
+
 .logo {
     display: flex;
     align-items: center;
@@ -79,33 +81,6 @@ nav ul img {
 nav ul a img:hover {
     transform: scale(1.35);
 }
-
-
-.cart-icon-container {
-    position: relative;
-}
-
-
-#cart-count {
-    background-color: red;
-    color: white;
-    padding: 0.1rem;
-    border-radius: 100%;
-    font-weight: bold;
-    position: absolute;
-    top: -10px;
-    right: -17px;
-    display: block;
-    width: 18px;
-    height: 18px;
-}
-
-
-.cart-count-hidden span {
-    display: none;
-}
-
-
 
 nav button {
     background: #e78f38;
@@ -200,6 +175,7 @@ nav button:hover {
 .form-group input[readonly] {
     background-color: #e9ecef;  /* Bootstrap's default gray for readonly inputs */
     cursor: not-allowed;
+    color: #000000;  /* Making readonly input text black */
 }
 
 button {

@@ -80,31 +80,6 @@ nav ul a img:hover {
     transform: scale(1.35);
 }
 
-
-.cart-icon-container {
-    position: relative;
-}
-
-
-#cart-count {
-    background-color: red;
-    color: white;
-    padding: 0.1rem;
-    border-radius: 100%;
-    font-weight: bold;
-    position: absolute;
-    top: -10px;
-    right: -17px;
-    display: block;
-    width: 18px;
-    height: 18px;
-}
-
-
-.cart-count-hidden span {
-    display: none;
-}
-
 .user-profile img {
     width: 40px;
     height: 40px;
@@ -166,7 +141,7 @@ nav button:hover {
     backdrop-filter: blur(10px);
 }
 
-.chat-messages {
+chat-messages {
     height: 400px;
     overflow-y: auto;
     padding: 15px;
@@ -217,6 +192,137 @@ nav button:hover {
 
 .chat-input button:hover {
     background: #f79c42;
+}
+
+.feedback-section {
+    flex: 1;
+    background: rgba(40, 40, 40, 0.95);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.rating-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.rating {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.fa-star {
+    color: #666;
+    cursor: pointer;
+    font-size: 28px;
+    transition: all 0.3s ease;
+}
+
+.fa-star:hover,
+.fa-star.active {
+    color: #e78f38;
+    transform: scale(1.1);
+}
+
+.rating-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    margin-top: 8px;
+    display: block;
+}
+
+.feedback-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#feedbackType {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+}
+
+#feedbackText {
+    height: 150px;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    resize: none;
+    font-size: 15px;
+}
+
+.submit-btn {
+    padding: 12px;
+    background: #e78f38;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.7;
+}
+
+.submit-btn:not(:disabled) {
+    opacity: 1;
+}
+
+.submit-btn:not(:disabled):hover {
+    background: #f79c42;
+    transform: translateY(-2px);
+}
+
+/* Success message styling */
+.success-message {
+    position: fixed;
+    top: 120px; /* Increased from 20px to appear below navigation */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(40, 167, 69, 0.9);
+    padding: 20px 40px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    display: none;
+    animation: slideDown 0.5s ease;
+    z-index: 1000; /* Add z-index to ensure proper layering */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.success-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.success-content i {
+    font-size: 32px;
+    color: #fff;
+}
+
+/* Adjust animation for new starting position */
+@keyframes slideDown {
+    from {
+        transform: translate(-50%, -100px);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
 }
 
 .feedback-section {

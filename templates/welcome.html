@@ -13,6 +13,8 @@
     <!-- Linking external CSS file -->
     <link rel="stylesheet" href="../static/css/login_signup.css" />
     <link rel="stylesheet" href="../static/css/welcome.css" />
+    <link rel="stylesheet" href="../static/css/login.css" />
+    <link rel="stylesheet" href="../static/css/signup.css" />
     <link rel="stylesheet" href="../static/css/shared/cart.css">
     <!-- Adding a favicon for the website -->
     <link
@@ -41,17 +43,18 @@
             <h1>Foodify</h1>
         </a>
         <ul>
-            <li><a href="{{ url_for('review_routes.all_orders_and_review') }}">Home</a></li>
-            <li><a href="welcome.html#restaurants">Restaurants</a></li>
-            <li><a href="welcome.html#search">Menu</a></li>
-            <li><a href="welcome.html#footer">About</a></li>
-            <li class="cart-icon-container">
-                <a href="{{ url_for('review_routes.all_orders_and_review') }}">
-                    <img src="../static/images/grocery-cart.png" alt="Cart">
-                    <span id="cart-count" class="cart-count-hidden"></span>
-                </a>
-            </li>
-        </ul>
+          <li><a href="{{ url_for('welcome_routes.welcome') }}">Home</a></li>
+          <li><a href="{{ url_for('welcome_routes.welcome') }}#restaurants">Restaurants</a></li>
+          <li><a href="{{ url_for('welcome_routes.welcome') }}#search">Menu</a></li>
+          <li><a href="{{ url_for('welcome_routes.welcome') }}#footer">About</a></li>
+          <li><a href="{{ url_for('contact_routes.contact') }}">Contact</a></li>
+          <li class="cart-icon-container">
+              <a href="{{ url_for('order_routes.order_page') }}">
+                  <img src="../static/images/grocery-cart.png" alt="Cart">
+                  <span id="cart-count" class="cart-count-hidden"></span>
+              </a>
+          </li>
+      </ul>
         {% if current_user.is_authenticated %}
             <!-- Logout and User buttons -->
             <div class="dropdown show">
@@ -79,13 +82,45 @@
         {% endif%}
     </nav>
 
+    <!-- Add this right after the nav section -->
+    {% if session.pop('order_success', False) %}
+    <div class="order-success-modal" id="successModal">
+        <div class="success-content">
+            <img src="{{ url_for('static', filename='images/foodify_logo.png') }}" class="success-logo">
+            <div class="checkmark-circle">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2>Order Confirmed! 🎉</h2>
+            <p>Thank you for your order of ${{ "%.2f"|format(session.pop('order_total', 0)) }}</p>
+            <p class="success-message">Your delicious food is being prepared!</p>
+            <div class="success-actions">
+                <a href="{{ url_for('welcome_routes.welcome') }}#restaurants" class="btn primary">Order Again</a>
+                <a href="{{ url_for('contact_routes.contact') }}" class="btn secondary">Leave Review</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const successModal = document.getElementById('successModal');
+        if (successModal) {
+            setTimeout(() => {
+                successModal.classList.add('fade-out');
+                setTimeout(() => {
+                    successModal.remove();
+                }, 500);
+            }, 10000);
+        }
+    });
+    </script>
+    {% endif %}
+
     <!-- Home section -->
     <section class="home">
         <div class="content">
             <h2>"Dining Made Easy, Right at Home 🏠🛵"</h2>
             <p>The Best Online Food Ordering System ❤️</p>
             <a href="#restaurants"><button id="restaurants">Order Now</button></a>
-            <button class="know_more" id="knowMoreButton">Know More</button>
         </div>
         <!-- Featured image for the home section -->
         <img src="../static/images/welcome_burger.png" alt="Double Beef Burger">

@@ -8,6 +8,8 @@ body {
     max-width: 1200px;
     margin: 80px auto 0;
     padding: 20px;
+    min-height: calc(100vh - 160px); /* Account for nav and footer */
+    padding-bottom: 60px; /* Add space before footer */
 }
 
 .location-prompt {
@@ -33,6 +35,12 @@ body {
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease;
+    color: #fff; /* Add this line */
+}
+
+/* Optional: Add hover state to maintain white color */
+.btn:hover {
+    color: #fff;
 }
 
 .btn.primary {
@@ -413,3 +421,81 @@ body {
 .tt-search-box-result:not(:last-child) {
     border-bottom: 1px solid rgba(231, 143, 56, 0.1);
 }
+<<<<<<< HEAD
+=======
+
+/* Add new styles for geolocation button */
+#geolocateMe {
+    background: linear-gradient(45deg, #e78f38, #f79c42);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(231, 143, 56, 0.3);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0; /* Changed from margin: 15px auto */
+    align-self: flex-start; /* Added to align to the left */
+}
+
+#geolocateMe i {
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+#geolocateMe:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 143, 56, 0.4);
+    background: linear-gradient(45deg, #f79c42, #ff9f47);
+}
+
+#geolocateMe:hover i {
+    transform: rotate(45deg);
+}
+
+#geolocateMe:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(231, 143, 56, 0.2);
+}
+
+/* Update footer styles */
+footer {
+    width: 100%;
+    margin-top: auto;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px 0;
+}
+
+.footer-bottom {
+    text-align: center;
+    color: #fff;
+    padding: 10px 0;
+}
+
+/* Add at the end of the file */
+
+/* Footer adjustments for delivery page */
+footer {
+    position: relative;
+    width: 100%;
+    margin-top: 40px; /* Reduced from auto */
+    padding: 10px 0; /* Reduced padding */
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.footer-bottom {
+    text-align: center;
+    color: #fff;
+    padding: 5px 0; /* Reduced padding */
+    margin: 0; /* Reset margin */
+}
+
+.footer-bottom p {
+    margin: 0; /* Remove paragraph margin */
+    font-size: 14px; /* Slightly smaller font */
+}
+
+>>>>>>> origin/Tariq_Branch

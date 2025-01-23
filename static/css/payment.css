@@ -120,30 +120,7 @@ nav button:hover {
     background: #f79c42;
 }
 
-
-.cart-icon-container {
-    position: relative;
-}
-
-
-#cart-count {
-    background-color: red;
-    color: white;
-    padding: 0.1rem;
-    border-radius: 100%;
-    font-weight: bold;
-    position: absolute;
-    top: -10px;
-    right: -17px;
-    display: block;
-    width: 18px;
-    height: 18px;
-}
-
-
-.cart-count-hidden span {
-    display: none;
-}
+/* Remove cart styles - now in shared/cart.css */
 
 .payment-container {
     max-width: 800px;
@@ -152,6 +129,7 @@ nav button:hover {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
     backdrop-filter: blur(10px);
+    color: #fff;
 }
 
 .order-summary {
@@ -162,9 +140,113 @@ nav button:hover {
 }
 
 .total-section {
-    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    margin-top: 25px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.amounts-section {
+    flex: 1;
+}
+
+.subtotal,
+.delivery-fee,
+.total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding: 8px 0;
+}
+
+.subtotal span,
+.delivery-fee span {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 15px;
+}
+
+.total {
+    margin-top: 15px;
+    padding-top: 15px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 20px;
+}
+
+.total span {
+    color: #e78f38;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.coupon-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-left: 20px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.coupon-input {
+    display: flex;
+    gap: 10px;
+}
+
+.coupon-input input {
+    flex: 1;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.coupon-input input:focus {
+    outline: none;
+    border-color: rgba(231, 143, 56, 0.5);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.coupon-input input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#applyCoupon {
+    padding: 12px 25px;
+    background: #e78f38;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#applyCoupon:hover {
+    background: #f79c42;
+    transform: translateY(-2px);
+}
+
+#applyCoupon:active {
+    transform: translateY(0);
+}
+
+.coupon-message {
+    margin-top: 10px;
+    font-size: 14px;
+    min-height: 20px;
+}
+
+.coupon-message.success {
+    color: #4CAF50;
+}
+
+.coupon-message.error {
+    color: #ff4444;
 }
 
 .cart-items {
@@ -176,6 +258,10 @@ nav button:hover {
     justify-content: space-between;
     padding: 10px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cart-item span {
+    color: #fff;
 }
 
 .credit-card-form {
@@ -191,6 +277,11 @@ nav button:hover {
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.1);
     color: white;
+    color: #fff;
+}
+
+.credit-card-form input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .card-details {
@@ -227,6 +318,10 @@ nav button:hover {
     display: block;
     margin: 10px 0;
     cursor: pointer;
+}
+
+.payment-options span {
+    color: #fff;
 }
 
 #confirm-payment {
@@ -273,6 +368,7 @@ footer ul {
 .contact h3 {
     text-align: center;
     text-decoration: underline;
+    color: #fff;
 }
 
 .footer-bottom {
@@ -281,6 +377,10 @@ footer ul {
     border-top: 1px solid #444;
     padding-top: 10px;
     font-size: 14px;
+}
+
+.footer-bottom p {
+    color: #fff;
 }
 
 .contact .team {
@@ -322,6 +422,10 @@ footer ul {
     transition: color 0.3s ease;
 }
 
+.contact .team-member .name {
+    color: #fff !important;
+}
+
 .contact .team-member img:hover+.name {
     color: #e78f38;
     /* Change color when hovering over the image */
@@ -333,6 +437,43 @@ footer ul {
     text-decoration: none;
 }
 
+.about p {
+    color: #fff;
+}
+
+/* Dropdown menu text color */
+.dropdown-menu {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.dropdown-item {
+    color: #fff !important;
+}
+
+.dropdown-item:hover {
+    background: rgba(231, 143, 56, 0.2);
+}
+
+.dropdown-menu .nav-item .dropdown-item {
+    color: #000 !important;
+}
+
+.dropdown-menu .nav-item .dropdown-item:hover {
+    background: rgba(231, 143, 56, 0.2);
+    color: #000 !important;
+}
+
+.order-summary h2,
+.payment-section h2 {
+    color: #fff;
+}
+
+/* Add spacing for dropdown relative to cart */
+.dropdown.show {
+    margin-left: 30px;  /* Add space between cart and dropdown */
+    display: inline-block;
+    position: relative;
+}
 
 @media (max-width: 768px) {
     .footer-content {

@@ -27,6 +27,17 @@ nav {
     backdrop-filter: blur(10px);
 }
 
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dropdown.show {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
 .logo {
     display: flex;
     align-items: center;

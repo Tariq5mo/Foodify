@@ -76,12 +76,95 @@
 }
 
 .error {
-    color: #721c24;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-    border-radius: 4px;
-    padding: 5px 10px;
+    color: #ff4444;
+    font-size: 0.8em;
     margin-top: 5px;
-    font-size: 14px;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px);
+    padding: 20px;
+    margin-top: 80px;
+}
+
+.form-box {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
     width: 100%;
+    max-width: 400px;
+}
+
+.form-box h2 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: #fff;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+    font-size: 1em;
+    font-weight: 600;  /* Make text bold */
+}
+
+.form-input:focus {
+    outline: 2px solid #e78f38;
+    background: rgba(255, 255, 255, 1);
+    color: #000;
+    font-weight: 600;  /* Maintain bold on focus */
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #e78f38;
+    color: #fff;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.submit-btn:hover {
+    transform: scale(0.98);
+    background: #f79c42;
+}
+
+.form-footer {
+    margin-top: 20px;
+    text-align: center;
+    color: black;
+}
+
+.form-footer a {
+    color: #e78f38;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
 }

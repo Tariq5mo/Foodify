@@ -9,6 +9,7 @@ from flask import (
 from models import storage
 from sqlalchemy.orm import joinedload
 from models.menu_item import MenuItem  # Add imports at top
+from models.restaurant import Restaurant
 
 # from app import foodify_app
 
@@ -31,16 +32,16 @@ def search_meals():
             page = int(request.args.get("page", 1))
             per_page = 8
 
-            # Build query with proper session
+            # Build query with proper relationship reference
             query = db_session.query(MenuItem).options(
-                joinedload("restaurant")
+                # Using actual relationship attribute
+                joinedload(MenuItem.restaurant)
             )
 
             # Apply filters
             if query_param:
                 query = query.filter(MenuItem.name.ilike(f"%{query_param}%"))
             if restaurant != "All":
-                from models.restaurant import Restaurant
                 query = query.join(MenuItem.restaurant).filter(
                     Restaurant.name == restaurant
                 )

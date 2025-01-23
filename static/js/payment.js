@@ -8,7 +8,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const creditCardForm = document.getElementById('credit-card-form');
     const paymentOptions = document.querySelectorAll('input[name="payment"]');
 
+<<<<<<< HEAD
 
+=======
+    function updateCartCount() {
+        const cartCount = document.getElementById('cart-count');
+        if (!cartCount) return;
+
+        const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
+
+        if (totalQuantity > 0) {
+            cartCount.textContent = totalQuantity;
+            cartCount.classList.remove('cart-count-hidden');
+            cartCount.classList.add('cart-count-active');
+        } else {
+            cartCount.classList.remove('cart-count-active');
+            cartCount.classList.add('cart-count-hidden');
+        }
+    }
+>>>>>>> origin/Tariq_Branch
 
     function updateOrderSummary() {
         cartContainer.innerHTML = '';
@@ -29,6 +47,73 @@ document.addEventListener('DOMContentLoaded', () => {
         totalElement.textContent = `$${(subtotal + deliveryFee).toFixed(2)}`;
     }
 
+<<<<<<< HEAD
+=======
+    const applyCouponButton = document.getElementById('applyCoupon');
+    const couponInput = document.getElementById('couponCode');
+    const couponMessage = document.getElementById('couponMessage');
+    let appliedCoupon = null;
+
+    applyCouponButton.addEventListener('click', async () => {
+        const code = couponInput.value.trim().toUpperCase();
+        
+        if (!code) {
+            showCouponMessage('Please enter a coupon code', 'error');
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/v1/apply_coupon', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ code })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                appliedCoupon = data.discount;
+                showCouponMessage(`Coupon applied! ${data.discount}% off`, 'success');
+                updateTotals();
+                couponInput.disabled = true;
+                applyCouponButton.disabled = true;
+            } else {
+                showCouponMessage(data.error || 'Invalid coupon code', 'error');
+            }
+        } catch (error) {
+            showCouponMessage('Error applying coupon', 'error');
+        }
+    });
+
+    function showCouponMessage(message, type) {
+        couponMessage.textContent = message;
+        couponMessage.className = `coupon-message ${type}`;
+    }
+
+    function updateTotals() {
+        fetch('/api/v1/payment/totals')
+            .then(response => response.json())
+            .then(data => {
+                let subtotal = parseFloat(data.subtotal);
+                let total = parseFloat(data.total);
+
+                if (appliedCoupon) {
+                    const discount = total * (appliedCoupon / 100);
+                    total -= discount;
+                }
+
+                document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+                document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Update totals periodically
+    setInterval(updateTotals, 5000);
+
+>>>>>>> origin/Tariq_Branch
     paymentOptions.forEach(option => {
         option.addEventListener('change', () => {
             creditCardForm.style.display =
@@ -36,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    document.getElementById('confirm-payment').addEventListener('click', () => {
+    document.getElementById('confirm-payment').addEventListener('click', async () => {
         const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
 
         if (paymentMethod === 'credit' && !validateCreditCard()) {
@@ -44,9 +129,30 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        alert(`Order confirmed! Payment method: ${paymentMethod}`);
-        localStorage.removeItem('cartItems');
-        window.location.href = 'index.html';
+        try {
+            const response = await fetch('/confirm_order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ payment_method: paymentMethod })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Clear cart
+                localStorage.removeItem('cartItems');
+                updateCartCount(); // Update cart count after clearing
+                // Redirect to welcome page
+                window.location.href = data.redirect;
+            } else {
+                alert(data.error || 'Error confirming order');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to process order. Please try again.');
+        }
     });
 
     function validateCreditCard() {

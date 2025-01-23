@@ -21,7 +21,7 @@ class Client(BaseModel, Base, UserMixin):
     longitude = Column(Float, nullable=True)
     phone = Column(String(20), nullable=True)
     delivery_instructions = Column(String(500), nullable=True)
-    contact_name = Column(String(100), nullable=True)
+    # contact_name = Column(String(100), nullable=True)
 
     reviews = relationship(
         "Review", back_populates="client", cascade="all, delete-orphan"
