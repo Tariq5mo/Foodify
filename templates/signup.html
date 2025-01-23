@@ -19,11 +19,12 @@
         </a>
         <ul>
             <li><a href="{{ url_for('welcome_routes.welcome') }}">Home</a></li>
-            <li><a href="welcome.html#restaurants">Restaurants</a></li>
-            <li><a href="welcome.html#search">Menu</a></li>
-            <li><a href="welcome.html#footer">About</a></li>
+            <li><a href="{{ url_for('welcome_routes.welcome') }}#restaurants">Restaurants</a></li>
+            <li><a href="{{ url_for('welcome_routes.welcome') }}#search">Menu</a></li>
+            <li><a href="{{ url_for('welcome_routes.welcome') }}#footer">About</a></li>
+            <li><a href="{{ url_for('contact_routes.contact') }}">Contact</a></li>
             <li class="cart-icon-container">
-                <a href="{{ url_for('review_routes.all_orders_and_review') }}">
+                <a href="{{ url_for('order_routes.order_page') }}">
                     <img src="../static/images/grocery-cart.png" alt="Cart">
                     <span id="cart-count" class="cart-count-hidden"></span>
                 </a>
@@ -37,46 +38,51 @@
         </a>
     </nav>
 
-    <section class="home">
-        <div class="container">
-            <div class="form_area">
-                <p class="title">Create an account</p>
-                <form action="{{ url_for('signup_routes.signup') }}" method="POST">
-                    {{ form.hidden_tag() }}
-                    <div class="form_group">
-                        <label class="sub_title" for="username">Username</label>
-                        {{ form.username(class="form_style", placeholder="Choose a username") }}
-                        {% if form.username.errors %}
-                            <div class="error">{{ form.username.errors[0] }}</div>
-                        {% endif %}
-                    </div>
-                    <div class="form_group">
-                        <label class="sub_title" for="address">Address</label>
-                        {{ form.address(class="form_style", placeholder="Enter your address") }}
-                        {% if form.address.errors %}
-                            <div class="error">{{ form.address.errors[0] }}</div>
-                        {% endif %}
-                    </div>
-                    <div class="form_group">
-                        <label class="sub_title" for="email">Email</label>
-                        {{ form.email(class="form_style", placeholder="Enter your email") }}
-                        {% if form.email.errors %}
-                            <div class="error">{{ form.email.errors[0] }}</div>
-                        {% endif %}
-                    </div>
-                    <div class="form_group">
-                        <label class="sub_title" for="password">Password</label>
-                        {{ form.password(class="form_style", placeholder="Enter your password") }}
-                        {% if form.password.errors %}
-                            <div class="error">{{ form.password.errors[0] }}</div>
-                        {% endif %}
-                    </div>
-                    <div>
-                        {{ form.submit(class="btn") }}
-                        <p>Have an Account? <a class="link" href="{{ url_for('login_routes.login') }}">Login Here!</a></p>
-                    </div>
-                </form>
-            </div>
+    <section class="login-container">
+        <div class="form-box">
+            <h2>Create Account</h2>
+            <form class="form" action="{{ url_for('signup_routes.signup') }}" method="POST">
+                {{ form.hidden_tag() }}
+                
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    {{ form.username(class="form-input", id="username") }}
+                    {% if form.username.errors %}
+                        <div class="error">{{ form.username.errors[0] }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    {{ form.address(class="form-input", id="address") }}
+                    {% if form.address.errors %}
+                        <div class="error">{{ form.address.errors[0] }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    {{ form.email(class="form-input", id="email") }}
+                    {% if form.email.errors %}
+                        <div class="error">{{ form.email.errors[0] }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    {{ form.password(class="form-input", id="password") }}
+                    {% if form.password.errors %}
+                        <div class="error">{{ form.password.errors[0] }}</div>
+                    {% endif %}
+                </div>
+
+                {{ form.submit(class="submit-btn") }}
+
+                <div class="form-footer">
+                    <span>Already have an account?</span>
+                    <a href="{{ url_for('login_routes.login') }}">Login</a>
+                </div>
+            </form>
         </div>
     </section>
 

@@ -1,5 +1,6 @@
 .cart-icon-container {
     position: relative;
+    margin-right: 20px;
 }
 
 #cart-count {
@@ -9,6 +10,14 @@
     transition: all 0.3s ease;
     font-size: 12px;
     text-align: center;
+    background-color: #e78f38;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+    min-width: 20px;
+    height: 20px;
+    z-index: 2;
 }
 
 .cart-count-hidden {
@@ -21,11 +30,27 @@
 .cart-count-active {
     opacity: 1;
     transform: scale(1);
-    background-color: #e78f38;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-weight: bold;
-    min-width: 20px;
-    height: 20px;
+}
+
+/* Cart icon styling */
+.cart-icon-container img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.cart-icon-container:hover img {
+    transform: scale(1.35);
+}
+
+/* Animation for cart updates */
+@keyframes cartPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.cart-count-updated {
+    animation: cartPulse 0.3s ease;
 }

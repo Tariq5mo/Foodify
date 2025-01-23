@@ -91,3 +91,35 @@ def get_totals():
     except Exception as e:
         print(f"Payment totals error: {e}")
         return jsonify({"error": str(e)}), 500
+
+
+@payment_routes.route("/api/v1/apply_coupon", methods=["POST"])
+@login_required
+def apply_coupon():
+    """Apply a coupon code to the order"""
+    try:
+        data = request.get_json()
+        code = data.get('code', '').upper()
+
+        # Example coupon codes - in real app, these would be in a database
+        valid_coupons = {
+            'WELCOME20': 20,
+            'ALX': 50,
+            'AHMED': 100
+        }
+
+        if code in valid_coupons:
+            return jsonify({
+                'success': True,
+                'discount': valid_coupons[code],
+                'message': f'Coupon applied! {valid_coupons[code]}% off'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': 'Invalid coupon code'
+            })
+
+    except Exception as e:
+        print(f"Coupon error: {e}")
+        return jsonify({'error': str(e)}), 500

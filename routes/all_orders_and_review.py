@@ -40,38 +40,32 @@ def submit_review():
     """Handle review submission"""
     try:
         data = request.get_json()
-        restaurant_name = data.get("restaurant")
-        rating = data.get("rating")
+        restaurant_id = data.get("restaurant_id")
+        rating = int(data.get("rating"))
         feedback = data.get("feedback")
 
         # Validate input
-        if not all([restaurant_name, rating, feedback]):
+        if not all([restaurant_id, rating, feedback]):
             return jsonify({"error": "Missing required fields"}), 400
 
-        # Find restaurant
-        restaurant = None
-        restaurants = storage.all(Restaurant).values()
-        for rest in restaurants:
-            if rest.name == restaurant_name:
-                restaurant = rest
-                break
-
-        if not restaurant:
-            return jsonify({"error": "Restaurant not found"}), 404
+        if not 1 <= rating <= 5:
+            return jsonify({"error": "Invalid rating"}), 400
 
         # Create new review
         review = Review(
             client_id=current_user.id,
-            restaurant_id=restaurant.id,
+            restaurant_id=restaurant_id,
             rating=rating,
-            comment=feedback,
+            comment=feedback
         )
+
         storage.new(review)
         storage.save()
 
-        return jsonify(
-            {"success": True, "message": "Review submitted successfully"}
-        )
+        return jsonify({
+            "success": True,
+            "message": "Review submitted successfully"
+        })
 
     except Exception as e:
         storage.rollback()

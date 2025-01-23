@@ -10,13 +10,16 @@
 body {
     background: linear-gradient(#666, #444);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 10%;
+    padding: 15px;
     position: fixed;
     top: 0;
     left: 0;
@@ -78,29 +81,56 @@ nav ul a img:hover {
     transform: scale(1.35);
 }
 
+/* Remove cart styles - now in shared/cart.css */
 
-.cart-icon-container {
-    position: relative;
+.user-profile img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease;
+    background-color: #ddd;
+    border-radius: 70%;
+    margin: 10px;
 }
 
-
-#cart-count {
-    background-color: red;
-    color: white;
-    padding: 0.1rem;
-    border-radius: 100%;
-    font-weight: bold;
-    position: absolute;
-    top: -10px;
-    right: -17px;
-    display: block;
-    width: 18px;
-    height: 18px;
+.user-profile:hover img {
+    transform: scale(1.1);
 }
 
+nav button {
+    background: #e78f38;
+    border: none;
+    color: #fff;
+    padding: 10px 30px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 20px;
+    transition: transform 0.3s ease, background 0.3s ease;
+    cursor: pointer;
+    margin-left: 10px;
+}
 
-.cart-count-hidden span {
-    display: none;
+nav button:hover {
+    transform: scale(0.95);
+    background: #f79c42;
+}
+
+/* Base styles */
+:root {
+    --primary: #e78f38;
+    --secondary: #f79c42;
+    --text: #ffffff;
+    --background: #111111;
+    --card-bg: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    background: linear-gradient(135deg, var(--background), #222);
+    font-family: 'Poppins', sans-serif;
+    color: var(--text);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .user-profile img {
@@ -156,133 +186,94 @@ body {
 .orders-container {
     max-width: 1200px;
     margin: 100px auto 40px;
-    padding: 20px auto;
+    padding: 20px;
+    color: white;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    flex: 1;
+}
+
+/* Order Items Grid */
+.orders-container {
+    max-width: 1200px;
+    margin: 100px auto 40px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 30px;
 }
 
-/* Container for the orders with scroll */
-.orders-left {
-    max-height: 600px; /* Adjust this height as per your requirements */
-    overflow-y: auto;  /* Default scroll visibility */
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    position: relative;
-    transition: all 0.3s ease;  /* Smooth transition for scroll */
-}
-
-
-/* Style for individual order items */
-.order-item {
-    padding: 12px;
-    margin-bottom: 15px;
-    background-color: #ffffff0c;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Scroll bar customization for Webkit browsers (Chrome, Safari) */
-.orders-left::-webkit-scrollbar {
-    width: 8px;
-}
-
-.orders-left::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.6); /* Transparent white */
-    border-radius: 10px;
-}
-
-.orders-left::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.2); /* Slightly transparent dark background */
-}
-
-/* Button for "View More" with animation */
-.view-more {
-    background-color: #0000008f;
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    text-align: center;
-    display: block;
-    margin: 0 auto;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-/* Hover effect for the "View More" button */
-.view-more:hover {
-    background-color: #e78f38;;
-    transform: translateY(5px);
-}
-
-/* Active effect when the button is clicked */
-.view-more:active {
-    transform: translateY(10px);
-}
-
-/* Smooth animation to scroll the content */
-@keyframes slide-down {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Animation for the "View More" button */
-.view-more {
-    animation: slide-down 0.5s ease-in-out;
-}
-
 .orders-container h1 {
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: #e78f38;
-    margin: 50px 180px 20px;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-/* Left Section (Items) */
+/* Order Items Grid */
 .order-items {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 25px;
-    
+    width: 100%;
+    place-items: center;
 }
-
 
 /* Individual Meal Card */
 .meal {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 30px;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
     width: 100%;
-    margin: 20px 40px;
-    max-width: 500px;
-    padding: 15px;
+    max-width: 600px;
+    margin: 15px auto;
+    padding: 20px;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
-    align-items: center;
-    gap: 60px;
+    gap: 30px;
+    position: relative;
+    transition: all 0.3s ease;  /* Smooth transition for scroll */
+}
+
+.meal:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(231, 143, 56, 0.3);
+}
+
+.meal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(231, 143, 56, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.meal:hover::before {
+    opacity: 1;
 }
 
 .meal img {
-    width: 150px;
-    height: 120px;
-    border-radius: 5px;
+    width: 180px;
+    height: 180px;
+    border-radius: 15px;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.5s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
-.meal:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(231, 143, 56, 0.2);
+
+.meal:hover img {
+    transform: scale(1.05) rotate(2deg);
 }
 
 .meal-info {
@@ -290,79 +281,162 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    justify-content: space-between;
+}
+
+.meal-header {
+    margin-bottom: 10px;
+}
+
+.meal-header h3 {
+    font-size: 1.4rem;
+    color: #fff;
+    margin: 0;
+}
+
+.meal-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.price-calculation {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 12px;
+    flex-wrap: nowrap;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.unit-price, .total-price {
+    font-size: 1.1rem;
+    color: #e78f38;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.multiply, .equals {
+    color: #888;
+    font-size: 1rem;
+    padding: 0 5px;
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 5px 12px;
+    border-radius: 20px;
+    min-width: 40px;
+    justify-content: center;
+}
+
+.quantity img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.quantity img:hover {
+    transform: scale(1.2);
+}
+
+.quantity-value {
+    font-size: 1rem;
+    color: #fff;
+    text-align: center;
+    min-width: 20px;
+}
+
+.total-price {
+    font-size: 1.3rem;
+    color: #e78f38;
+    font-weight: 700;
 }
 
 .meal-info h3 {
-    color: #e78f38;
-    font-size: 1.4rem;
-    margin: 0;
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
     font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.meal-info h2 {
+    color: #e78f38;
+    font-size: 1.8rem;
+    margin: 10px 0;
+    font-weight: 700;
 }
 
 .meal-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: auto;
+    margin-top: 20px;
 }
 
 .quantity {
     display: flex;
     align-items: center;
-    gap: 15px;
+    background: rgba(255, 255, 255, 0.1);
     padding: 8px 15px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .quantity img {
-    width: 24px;
-    height: 24px;
+    width: 25px;
+    height: 25px;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: all 0.3s ease;
+    box-shadow: none;
 }
 
 .quantity img:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
+    filter: brightness(1.2);
 }
 
 .quantity-value {
     color: #fff;
     font-weight: 600;
-    min-width: 30px;
+    min-width: 40px;
     text-align: center;
+    font-size: 1.1rem;
 }
 
-.quantity img:hover {
-    background: #e2e60083;
-}
-
-.quantity span {
-    margin: 0 10px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-}
-
-.price {
+.item-total {
+    background: rgba(231, 143, 56, 0.2);
+    padding: 8px 20px;
+    border-radius: 20px;
     color: #e78f38;
-    font-size: 1.3rem;
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
 }
 
-/* Right Section (Summary) */
+.meal:hover .item-total {
+    background: rgba(231, 143, 56, 0.3);
+    transform: scale(1.05);
+}
 
+/* Price Breakdown */
 .price-breakdown {
-    width: 500px;
-    height: 250px;
-    font-size: larger;
+    width: 100%;
     max-width: 500px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
     padding: 25px;
     text-align: center;
     backdrop-filter: blur(10px);
-    margin-top: 150px;
+    margin-top: 30px;
 }
 
 
@@ -381,62 +455,11 @@ body {
     font-size: 1.2rem;
 }
 
-/* Styling the input field for offer code */
-.offer-code-container {
-    margin-bottom: 20px; /* Space between the input field and the next section */
-    text-align: center; /* Center-align the text and fields */
-}
-
-.offer-code-label {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block; /* Display the label as a block element to separate it from the input field */
-    color: #00ffffd0;
-}
-
-.offer-code-input {
-    width: 100%;
-    max-width: 300px;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    margin-top: 5px;
-    transition: border-color 0.3s ease; /* Smooth transition when the border color changes */
-}
-
-.offer-code-input:focus {
-    outline: none;
-    border-color: #007bff; /* Change border color when focused */
-}
-
-/* Styling the order summary */
-.order-summary {
-    margin-top: 20px; /* Space between the input field and the total section */
-    text-align: center;
-}
-
-.order-summary span {
-    font-size: 18px;
-    margin-right: 10px;
-    font-weight: bold;
-}
-
-#total {
-    color: greenyellow; /* Change the total color to green */
-}
-
-#subtotal {
-    color: green; /* Set color for subtotal */
-}
-
 /* Proceed to Delivery Button */
 .proceed-btn {
-    width: 100%;
+    width: 300px; /* Fixed width */
     padding: 16px 28px;
-    margin-top: 25px;
+    margin: 25px auto;
     background: linear-gradient(135deg, #e78f38, #f79c42);
     border: none;
     border-radius: 12px;
@@ -465,16 +488,61 @@ body {
     transform: translateX(5px);
 }
 
+.empty-cart {
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.empty-cart a {
+    color: #e78f38;
+    text-decoration: underline;
+}
+
+.empty-cart a:hover {
+    color: #f79c42;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .meal {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
         padding: 15px;
-        gap: 15px;
     }
 
     .meal img {
-        width: 140px;
-        height: 140px;
+        width: 150px;
+        height: 150px;
+    }
+
+    .meal-info {
+        text-align: center;
+    }
+
+    .meal-footer {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .quantity {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .item-total {
+        width: 100%;
+        text-align: center;
+    }
+
+    .price-calculation {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .meal-header {
+        text-align: center;
     }
 }
 
@@ -482,6 +550,8 @@ footer {
     background-color: black;
     color: #fff;
     padding: 30px 10%;
+    margin-top: auto;
+    width: 100%;
 }
 
 .footer-content {

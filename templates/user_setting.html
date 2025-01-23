@@ -27,13 +27,13 @@
             <h1>Foodify</h1>
         </a>
         <ul>
-            <!-- Navigation links -->
             <li><a href="{{ url_for('welcome_routes.welcome') }}">Home</a></li>
-            <li><a href="welcome#restaurants">Restaurants</a></li>
-            <li><a href="welcome#search">Menu</a></li>
-            <li><a href="welcome#footer">About</a></li>
+            <li><a href="{{ url_for('welcome_routes.welcome') }}#restaurants">Restaurants</a></li>
+            <li><a href="{{ url_for('welcome_routes.welcome') }}#search">Menu</a></li>
+            <li><a href="{{ url_for('welcome_routes.welcome') }}#footer">About</a></li>
+            <li><a href="{{ url_for('contact_routes.contact') }}">Contact</a></li>
             <li class="cart-icon-container">
-                <a href="{{ url_for('review_routes.all_orders_and_review') }}">
+                <a href="{{ url_for('order_routes.order_page') }}">
                     <img src="../static/images/grocery-cart.png" alt="Cart">
                     <span id="cart-count" class="cart-count-hidden"></span>
                 </a>
