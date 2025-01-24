@@ -87,35 +87,6 @@
     </nav>
 
     <div class="orders-container">
-<<<<<<< HEAD
-        <h1>Your Orders</h1>
-
-            <div class="meal" data-meal-id="1">
-                <!-- Meal details -->
-                <img src="../static/images/Double Beef Burger.png" alt="Meal Image">
-                <hr>
-                <div class="meal-info">
-                    <h2>$10,00</h2>
-                    <h3>meal name</h3>
-                    <div class="meal-footer">
-                        <div class="quantity">
-                            <img src="../static/images/reduce.png" class="decrease" alt="Reduce quantity">
-                            <span class="quantity-value" data-quantity="0">0</span> <!-- Dynamic quantity here -->
-                            <img src="../static/images/add.png" class="increase" alt="Increase quantity">
-                        </div>
-                    </div>
-                </div>
-            </div>
-	<div id="loadingIndicator" class="loading-indicator" style="display: none;">
-		<i class="fas fa-spinner fa-spin"></i>
-		Loading more items...
-	</div>
-
-        <div class="price-breakdown">
-            <h2>Price Details</h2>
-            <div id="itemizedPrices">
-                <!-- Individual item prices here -->
-=======
         {% if order_items and order_items|length > 0 %}
             <div class="order-items">
                 {% for item in order_items %}
@@ -146,7 +117,6 @@
                     <span>Proceed to Delivery</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
->>>>>>> origin/Tariq_Branch
             </div>
         {% else %}
             <div class="empty-cart">
