@@ -93,36 +93,6 @@ nav ul a img:hover {
     margin: 10px;
 }
 
-<<<<<<< HEAD
-
-#cart-count {
-    background-color: red;
-    color: white;
-    padding: 0.1rem;
-    border-radius: 100%;
-    font-weight: bold;
-    position: absolute;
-    top: -10px;
-    right: -17px;
-    display: block;
-    width: 18px;
-    height: 18px;
-}
-
-
-.cart-count-hidden span {
-    display: none;
-}
-
-.user-profile img {
-    width: 40px;
-    height: 40px;
-    transition: transform 0.3s ease;
-    background-color: #ddd;
-    border-radius: 70%;
-    margin: 10px;
-}
-
 .user-profile:hover img {
     transform: scale(1.1);
 }
@@ -145,30 +115,6 @@ nav button:hover {
     background: #f79c42;
 }
 
-=======
-.user-profile:hover img {
-    transform: scale(1.1);
-}
-
-nav button {
-    background: #e78f38;
-    border: none;
-    color: #fff;
-    padding: 10px 30px;
-    font-size: 15px;
-    font-weight: 600;
-    border-radius: 20px;
-    transition: transform 0.3s ease, background 0.3s ease;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-nav button:hover {
-    transform: scale(0.95);
-    background: #f79c42;
-}
-
->>>>>>> origin/Tariq_Branch
 /* Base styles */
 :root {
     --primary: #e78f38;
@@ -184,29 +130,20 @@ body {
     color: var(--text);
     margin: 0;
     min-height: 100vh;
-<<<<<<< HEAD
-=======
     display: flex;
     flex-direction: column;
->>>>>>> origin/Tariq_Branch
 }
 
 .orders-container {
     max-width: 1200px;
     margin: 100px auto 40px;
     padding: 20px;
-<<<<<<< HEAD
-=======
     color: white;
->>>>>>> origin/Tariq_Branch
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 30px;
-<<<<<<< HEAD
-=======
     flex: 1;
->>>>>>> origin/Tariq_Branch
 }
 
 /* Order Items Grid */
@@ -220,15 +157,12 @@ body {
     gap: 30px;
 }
 
-<<<<<<< HEAD
-=======
 .orders-container h1 {
     color: #ffffff;
     text-align: center;
     margin-bottom: 30px;
 }
 
->>>>>>> origin/Tariq_Branch
 /* Order Items Grid */
 .order-items {
     display: grid;
@@ -236,36 +170,6 @@ body {
     gap: 25px;
     width: 100%;
     place-items: center;
-<<<<<<< HEAD
-}
-
-/* Individual Meal Card */
-.meal {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 30px;
-    width: 100%;
-    max-width: 500px;
-    padding: 15px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 60px;
-}
-
-.meal img {
-    width: 170px;
-    height: 170px;
-    border-radius: 15px;
-    object-fit: cover;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-.meal:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(231, 143, 56, 0.2);
-=======
 }
 
 /* Individual Meal Card */
@@ -321,7 +225,6 @@ body {
 
 .meal:hover img {
     transform: scale(1.05) rotate(2deg);
->>>>>>> origin/Tariq_Branch
 }
 
 .meal-info {
@@ -329,36 +232,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
-<<<<<<< HEAD
-}
-
-.meal-info h3 {
-    color: #e78f38;
-    font-size: 1.4rem;
-    margin: 0;
-    font-weight: 600;
-}
-
-.meal-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
-}
-
-.quantity {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 8px 15px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-}
-
-.quantity img {
-    width: 24px;
-    height: 24px;
-=======
     justify-content: space-between;
 }
 
@@ -417,39 +290,11 @@ body {
 .quantity img {
     width: 20px;
     height: 20px;
->>>>>>> origin/Tariq_Branch
     cursor: pointer;
     transition: transform 0.2s ease;
 }
 
 .quantity img:hover {
-<<<<<<< HEAD
-    transform: scale(1.1);
-}
-
-.quantity-value {
-    color: #fff;
-    font-weight: 600;
-    min-width: 30px;
-    text-align: center;
-}
-
-.quantity img:hover {
-    background: #e2e60083;
-}
-
-.quantity span {
-    margin: 0 10px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-}
-
-.price {
-    color: #e78f38;
-    font-size: 1.3rem;
-    font-weight: 600;
-=======
     transform: scale(1.2);
 }
 
@@ -531,7 +376,6 @@ body {
 .meal:hover .item-total {
     background: rgba(231, 143, 56, 0.3);
     transform: scale(1.05);
->>>>>>> origin/Tariq_Branch
 }
 
 /* Price Breakdown */
@@ -543,31 +387,6 @@ body {
     padding: 25px;
     backdrop-filter: blur(10px);
     margin-top: 30px;
-<<<<<<< HEAD
-}
-
-
-.price-item {
-    display: grid;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.total {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 2px solid var(--primary);
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
-/* Proceed to Delivery Button */
-.proceed-btn {
-    width: 100%;
-    padding: 16px 28px;
-    margin-top: 25px;
-=======
 }
 
 
@@ -591,7 +410,6 @@ body {
     width: 300px; /* Fixed width */
     padding: 16px 28px;
     margin: 25px auto;
->>>>>>> origin/Tariq_Branch
     background: linear-gradient(135deg, #e78f38, #f79c42);
     border: none;
     border-radius: 12px;
@@ -620,18 +438,6 @@ body {
     transform: translateX(5px);
 }
 
-<<<<<<< HEAD
-/* Responsive Design */
-@media (max-width: 768px) {
-    .meal {
-        padding: 15px;
-        gap: 15px;
-    }
-
-    .meal img {
-        width: 140px;
-        height: 140px;
-=======
 .empty-cart {
     color: #ffffff;
     text-align: center;
@@ -687,7 +493,6 @@ body {
 
     .meal-header {
         text-align: center;
->>>>>>> origin/Tariq_Branch
     }
 }
 
