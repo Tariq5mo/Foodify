@@ -31,6 +31,7 @@ nav {
     display: flex;
     align-items: center;
     color: #fff;
+    text-decoration: none;
     font-size: 20px;
     font-weight: bolder;
     transition: transform 0.3s ease-in-out;
@@ -57,8 +58,11 @@ nav ul li {
 }
 
 nav ul li a {
+    display: flex;
+    align-items: flex-start;
     font-size: 16px;
     color: #fff;
+    text-decoration: none;
     text-transform: uppercase;
     font-weight: 400;
     transition: color 0.3s ease, border-bottom 0.2s ease;
@@ -149,17 +153,6 @@ nav button:hover {
     transform: scale(0.95);
 }
 
-.home button.know_more {
-    background: transparent;
-    border: 2px solid #e78f38;
-    color: #eee;
-    margin-left: 20px;
-}
-
-.home button.know_more:hover {
-    background: #fff;
-    color: #e78f38;
-}
 
 .home img {
     width: 450px;
