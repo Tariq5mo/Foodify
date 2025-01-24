@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
     const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     const cartContainer = document.getElementById('cart-items');
     const subtotalElement = document.getElementById('subtotal');
@@ -8,9 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const creditCardForm = document.getElementById('credit-card-form');
     const paymentOptions = document.querySelectorAll('input[name="payment"]');
 
-<<<<<<< HEAD
-
-=======
     function updateCartCount() {
         const cartCount = document.getElementById('cart-count');
         if (!cartCount) return;
@@ -26,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
             cartCount.classList.add('cart-count-hidden');
         }
     }
->>>>>>> origin/Tariq_Branch
 
     function updateOrderSummary() {
         cartContainer.innerHTML = '';
@@ -47,8 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
         totalElement.textContent = `$${(subtotal + deliveryFee).toFixed(2)}`;
     }
 
-<<<<<<< HEAD
-=======
     const applyCouponButton = document.getElementById('applyCoupon');
     const couponInput = document.getElementById('couponCode');
     const couponMessage = document.getElementById('couponMessage');
@@ -113,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update totals periodically
     setInterval(updateTotals, 5000);
 
->>>>>>> origin/Tariq_Branch
     paymentOptions.forEach(option => {
         option.addEventListener('change', () => {
             creditCardForm.style.display =
@@ -167,4 +159,3 @@ document.addEventListener('DOMContentLoaded', () => {
     updateOrderSummary();
     updateCartCount();
 });
-
