@@ -86,16 +86,18 @@
     {% if session.pop('order_success', False) %}
     <div class="order-success-modal" id="successModal">
         <div class="success-content">
+            <span class="modal-close">&times;</span>
             <img src="{{ url_for('static', filename='images/foodify_logo.png') }}" class="success-logo">
             <div class="checkmark-circle">
                 <i class="fas fa-check"></i>
             </div>
             <h2>Order Confirmed! 🎉</h2>
-            <p>Thank you for your order of ${{ "%.2f"|format(session.pop('order_total', 0)) }}</p>
-            <p class="success-message">Your delicious food is being prepared!</p>
+            <p class="success-message">Thank you for choosing Foodify! We're honored to serve you today.</p>
+            <p class="preparation-message">Our chefs are preparing your delicious meal with care and love. 👨‍🍳✨</p>
+            <p class="wishes-message">We hope every bite brings you joy. Bon Appétit! 🍽️</p>
             <div class="success-actions">
                 <a href="{{ url_for('welcome_routes.welcome') }}#restaurants" class="btn primary">Order Again</a>
-                <a href="{{ url_for('contact_routes.contact') }}" class="btn secondary">Leave Review</a>
+                <a href="{{ url_for('contact_routes.contact') }}" class="btn secondary">Share Your Experience</a>
             </div>
         </div>
     </div>
@@ -103,13 +105,35 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const successModal = document.getElementById('successModal');
+        const closeButton = document.querySelector('.modal-close');
+
         if (successModal) {
+            // Auto-close timer
             setTimeout(() => {
                 successModal.classList.add('fade-out');
                 setTimeout(() => {
                     successModal.remove();
                 }, 500);
-            }, 10000);
+            }, 60000);
+
+            // Manual close handler for X button
+            closeButton.addEventListener('click', () => {
+                successModal.classList.add('fade-out');
+                setTimeout(() => {
+                    successModal.remove();
+                }, 500);
+            });
+
+            // Close when clicking outside the modal
+            document.addEventListener('click', (event) => {
+                if (!successModal.querySelector('.success-content').contains(event.target) 
+                    && event.target !== closeButton) {
+                    successModal.classList.add('fade-out');
+                    setTimeout(() => {
+                        successModal.remove();
+                    }, 500);
+                }
+            });
         }
     });
     </script>
@@ -151,11 +175,13 @@
       <ul class="resutrant">
         <!-- List of restaurants -->
         <li class="restaurant">
-          <img
-            src="../static/images/menu_items/Burger_Blast/logo.jpeg"
-            alt="Burger Blast"
-          />
-          <h3>Burger Blast</h3>
+          <a href="{{ url_for('restaurant_routes.burger_blast') }}">
+            <img
+              src="../static/images/menu_items/Burger_Blast/logo.jpeg"
+              alt="Burger Blast"
+            />
+            <h3>Burger Blast</h3>
+          </a>
         </li>
         <li class="restaurant">
           <img

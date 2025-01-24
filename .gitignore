@@ -3,3 +3,6 @@ __pycache__/
 **/__pycache__/
 *.py[cod]
 my_venv/
+.env
+*.pyc
+.DS_Store

@@ -3,11 +3,105 @@ let map;
 let marker;
 let searchBox;
 let isOnline = navigator.onLine;
+let API_KEY;
 
-// TomTom API key
-const API_KEY = "gTnO8GY8uqFMsvsF9yz3wZdxMFWBR0kJ";
+// Move initializeMap function definition before it's called
+function initializeMap() {
+    if (!isOnline || !API_KEY) {
+        showError('No internet connection or missing API key');
+        return;
+    }
+
+    try {
+        map = tt.map({
+            key: API_KEY,
+            container: "map",
+            center: [31.2357, 30.0444], // Cairo coordinates
+            zoom: 13,
+            interactive: true,
+        });
+
+        // Add loading error handler
+        map.on('error', (e) => {
+            showError('Failed to load map. Please check your internet connection.');
+        });
+
+        try {
+            // Create SearchBox directly with services instance
+            searchBox = new tt.plugins.SearchBox(tt.services, {
+                minNumberOfCharacters: 3,
+                showSearchButton: true,
+                placeholder: "Search location...",
+                searchOptions: {
+                    key: API_KEY,
+                    language: "en-GB",
+                },
+            });
+
+            // Add SearchBox to map
+            map.addControl(searchBox, "top-left");
+
+            // Handle result selection
+            searchBox.on("tomtom.searchbox.resultselected", function (event) {
+                const result = event.data.result;
+                if (result.position) {
+                    const coords = [result.position.lng, result.position.lat];
+                    map.flyTo({
+                        center: coords,
+                        zoom: 15,
+                    });
+                    placeMarker(coords);
+                    getAddress({
+                        lng: result.position.lng,
+                        lat: result.position.lat,
+                    });
+                }
+            });
+        } catch (error) {
+            console.error("SearchBox initialization error:", error);
+            showError("Failed to initialize search");
+        }
+
+        // Add marker on map click
+        map.on("click", (e) => {
+            // TomTom click event provides coordinates in {lng, lat} format
+            const clickedPoint = e.lngLat;
+            placeMarker(clickedPoint);
+            getAddress(clickedPoint);
+        });
+    } catch (error) {
+        console.error("Map initialization error:", error);
+        showError('Failed to initialize map');
+    }
+}
+
+async function fetchApiKey() {
+    try {
+        console.log('Fetching API key...');
+        const response = await fetch('/api/v1/config');
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Config data received:', data);
+        
+        if (!data.TOMTOM_API_KEY) {
+            throw new Error('API key not found in response');
+        }
+        
+        API_KEY = data.TOMTOM_API_KEY;
+        initializeMap();
+    } catch (error) {
+        console.error("Error fetching API key:", error);
+        showError('Failed to load configuration: ' + error.message);
+    }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
+    fetchApiKey();  // Get API key first
   const locationPrompt = document.getElementById("locationPrompt");
   const mapSection = document.getElementById("mapSection");
 
@@ -21,76 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
     mapSection.style.display = "block";
     initializeMap();
   });
-
-  // Initialize map
-  function initializeMap() {
-    if (!isOnline) {
-      showError('No internet connection. Please check your connection and try again.');
-      return;
-    }
-
-    try {
-      map = tt.map({
-        key: API_KEY,
-        container: "map",
-        center: [31.2357, 30.0444], // Cairo coordinates
-        zoom: 13,
-        interactive: true,
-      });
-
-      // Add loading error handler
-      map.on('error', (e) => {
-        showError('Failed to load map. Please check your internet connection.');
-      });
-
-      try {
-        // Create SearchBox directly with services instance
-        searchBox = new tt.plugins.SearchBox(tt.services, {
-          minNumberOfCharacters: 3,
-          showSearchButton: true,
-          placeholder: "Search location...",
-          searchOptions: {
-            key: API_KEY,
-            language: "en-GB",
-          },
-        });
-
-        // Add SearchBox to map
-        map.addControl(searchBox, "top-left");
-
-        // Handle result selection
-        searchBox.on("tomtom.searchbox.resultselected", function (event) {
-          const result = event.data.result;
-          if (result.position) {
-            const coords = [result.position.lng, result.position.lat];
-            map.flyTo({
-              center: coords,
-              zoom: 15,
-            });
-            placeMarker(coords);
-            getAddress({
-              lng: result.position.lng,
-              lat: result.position.lat,
-            });
-          }
-        });
-      } catch (error) {
-        console.error("SearchBox initialization error:", error);
-        showError("Failed to initialize search");
-      }
-
-      // Add marker on map click
-      map.on("click", (e) => {
-        // TomTom click event provides coordinates in {lng, lat} format
-        const clickedPoint = e.lngLat;
-        placeMarker(clickedPoint);
-        getAddress(clickedPoint);
-      });
-    } catch (error) {
-      console.error("Map initialization error:", error);
-      showError('Failed to initialize map. Please check your internet connection.');
-    }
-  }
 
   // Handle geolocation
   document.getElementById("geolocateMe").addEventListener("click", () => {
