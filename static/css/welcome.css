@@ -138,6 +138,8 @@ nav button:hover {
 }
 
 .home button {
+    margin-left: 80px;
+    width:250px;
     margin-top: 30px;
     background: #e78f38;
     border: 2px solid #e78f38;
