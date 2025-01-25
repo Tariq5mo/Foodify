@@ -154,18 +154,6 @@ nav button:hover {
     transform: scale(0.95);
 }
 
-.home button.know_more {
-    background: transparent;
-    border: 2px solid #e78f38;
-    color: #eee;
-    margin-left: 20px;
-}
-
-.home button.know_more:hover {
-    background: #fff;
-    color: #e78f38;
-}
-
 .home img {
     width: 450px;
     height: auto;
