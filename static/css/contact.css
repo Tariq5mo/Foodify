@@ -183,11 +183,13 @@ chat-messages {
     padding: 10px 15px;
     border-radius: 10px;
     max-width: 80%;
+    color: white;
 }
 
 .message.received {
     background: rgba(231, 143, 56, 0.2);
     margin-right: auto;
+    color:white;
 }
 
 .message.sent {
@@ -206,7 +208,7 @@ chat-messages {
     border: none;
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.527);
+    color: white;
     resize: none;
 }
 
@@ -215,7 +217,7 @@ chat-messages {
     background: #e78f38;
     border: none;
     border-radius: 10px;
-    color: rgba(255, 255, 255, 0.459);
+    color: white;
     cursor: pointer;
     transition: background 0.3s ease;
 }
