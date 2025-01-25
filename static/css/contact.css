@@ -9,7 +9,7 @@
 }
 
 body {
-    background: linear-gradient(#666, #444);
+    background: linear-gradient(#111, #222);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -38,7 +38,8 @@ nav {
 }
 
 .logo img {
-    width: 50px;
+    object-fit: cover;
+    width: 170px;
     height: 70px;
     margin-right: 10px;
 }
@@ -57,10 +58,14 @@ nav ul li {
 }
 
 nav ul li a {
+    display: flex;
+    align-items: center;
     font-size: 16px;
     color: #fff;
+    text-decoration: none;
     text-transform: uppercase;
-    font-weight: 400;
+    font-weight: 500;
+    margin-top: 15px;
     transition: color 0.3s ease, border-bottom 0.2s ease;
 }
 
@@ -78,6 +83,31 @@ nav ul img {
 
 nav ul a img:hover {
     transform: scale(1.35);
+}
+
+nav button {
+    background: #e78f38;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;  /* Reduced horizontal padding */
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 20px;
+    transition: transform 0.3s ease, background 0.3s ease;
+    cursor: pointer;
+    margin-left: 10px;
+    min-width: 90px;    /* Added minimum width */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+#signUpBtn {
+    width: auto;      /* Allow button to fit content */
+    padding: 10px 20px;
+}
+
+nav button:hover {
+    transform: scale(0.95);
+    background: #f79c42;
 }
 
 .user-profile img {
