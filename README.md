@@ -304,15 +304,6 @@ python app.py
 ### Session Management
 - Flask-Session - Server-side session handling
 
-### Development Tools
-- Black - Code formatter
-- Flake8 - Code linter
-
-### Key Python Libraries
-- os - Operating system interface
-- datetime - Date and time handling
-- uuid - Unique identifier generation
-
 ### Dependencies Management
 - pip - Package installer
 - requirements.txt - Dependency management
