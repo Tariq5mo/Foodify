@@ -279,32 +279,39 @@ python app.py
 ## 🔧 Backend Technologies
 
 ### Core Framework and Language
+
 - Python 3 - Primary programming language
 - Flask - Web framework for building the REST API
 
 ### Database & ORM
+
 - MySQL - Primary database system
 - SQLAlchemy - Object-Relational Mapping (ORM)
 - MySQL-Connector-Python - Database connector
 
 ### Authentication & Security
+
 - Flask-Login - User session management
 - Flask-Bcrypt - Password hashing
 - Flask-WTF - Form handling and CSRF protection
 - WTForms - Form validation
 
 ### Environment & Configuration
+
 - python-dotenv - .env file management
 - Blueprint - Flask modular routing
 
 ### API & External Services
+
 - TomTom API - Location services integration
 - Requests - HTTP library for API calls
 
 ### Session Management
+
 - Flask-Session - Server-side session handling
 
 ### Dependencies Management
+
 - pip - Package installer
 - requirements.txt - Dependency management
 
@@ -446,10 +453,10 @@ Common issues and solutions:
 
 ## 👥 Contributors
 
-- [Abubakr Elgandy](https://github.com/abobakrelgandy) - Backend Developer | project manager
+- [Abubakr Elgandy](https://github.com/abobakrelgandy) - Backend Developer | Frontend Developer
 - [John Samy](https://github.com/JohnSamy2004) - Backend Developer | Frontend Developer
 - [Ahmed Bentabet](https://github.com/ahmedbentabet) - Backend Developer | Database Manager
-- [Tariq Omer](https://github.com/Tariq5mo) - Backend Developer | Frontend Developer
+- [Tariq Omer](https://github.com/Tariq5mo) - Backend Developer | project manager
 
 ---
 
